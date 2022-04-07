@@ -20,6 +20,5 @@ from keyboards.schedule_kb import STREAM_TSEIMK_BUTTONS_KB
 from keyboards.schedule_kb import STREAM_RIT_BUTTONS_KB
 from keyboards.schedule_kb import STREAM_KIIB_BUTTONS_KB
 from keyboards.schedule_kb import STREAM_SISS_BUTTONS_KB
-from keyboards.schedule_kb import STREAM_KB
 from keyboards.schedule_kb import DAYS_OF_WEEK_KB
 from keyboards.schedule_kb import CURRENT_OR_NEXT_WEEK_KB
