@@ -28,4 +28,5 @@ async def get_week() -> str:
             return 'нечетная'
 
     except:
+        print_error('Ошибка в whataweek')
         return False

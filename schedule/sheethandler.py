@@ -9,8 +9,10 @@ import json
 async def print_schedule(day_type, group):
 
     day_time_utc = datetime.weekday(datetime.today().utcnow() + timedelta(hours=3))
+
     if day_type == 'завтра':
         day_time_utc += 1
+
     week_checked = await get_week()
     even = True if week_checked == 'четная' else False
     output = '⸻⸻⸻⸻⸻\n' + 'Группа: ' + group.upper() + '\n' \
@@ -33,7 +35,10 @@ async def print_schedule(day_type, group):
 
     responce = json.loads(await aiohttp_fetch(url='http://rest-service-container:8000/{0}/{1}/{2}/{3}'.format(group, day_of_week, even, False)))
     output += responce['schedule']
+
     return output
+
+
 async def print_full_schedule(day_type, group):
 
     week_checked = await get_week()
@@ -47,6 +52,7 @@ async def print_full_schedule(day_type, group):
             even = True
         else:
             even = False
+
     output = '⸻⸻⸻⸻⸻\n' + 'Группа: ' + group.upper() + '\n' \
         + 'Неделя: ' + week_checked.capitalize() + '\n' + '⸻⸻⸻⸻⸻\n'
     group = translit(group, language_code='ru', reversed=True)
@@ -56,5 +62,7 @@ async def print_full_schedule(day_type, group):
     for i in range(6):
         output += '\n' + DAYS_RU[i].capitalize() + '\n\n'
         output += responce['schedule'][i][0]
+        
     return output
+
         
