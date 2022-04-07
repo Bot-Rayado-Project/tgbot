@@ -7,6 +7,8 @@ authors = ["darttusin <ivanchepikov444@gmail.com>"]
 [tool.poetry.dependencies]
 python = "3.10.2"
 aiogram = "^2.19"
+aiohttp = "^3.8.1"
+transliterate = "^1.10.2"
 
 [tool.poetry.dev-dependencies]
 

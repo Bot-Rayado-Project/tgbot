@@ -1,6 +1,7 @@
-import sched
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import filters
+from schedule.sheethandler import print_full_schedule, print_schedule
+from keyboards.menu_kb import START_KB
 from keyboards.schedule_kb import FACULTIES_BUTTONS_KB
 from keyboards.schedule_kb import STREAM_IT_BUTTONS_KB
 from keyboards.schedule_kb import STREAM_TSEIMK_BUTTONS_KB
@@ -29,6 +30,13 @@ DAYS_OF_WEEK = ['Сегодня', 'Завтра', 'Вся неделя', 'Тек
 FACULTIES = ['ИТ', 'КиИБ', 'РиТ', 'ЦЭиМК', 'СиСС']
 STREAMS = ['БВТ', 'БФИ', 'БСТ', 'БЭИ', 'БИБ', 'БМП', 
 'ЗРС', 'БАП', 'БУТ', 'БРТ', 'БИК', 'ББИ', 'БЭЭ', 'БЭР', 'БИН']
+GROUPS = ['бфи2101', 'бфи2102', 'бвт2101', 'бвт2102', 'бвт2103', 'бвт2104', 'бвт2105', 
+'бвт2106', 'бвт2107', 'бвт2108', 'бст2101', 'бст2102', 'бст2103', 'бст2104', 'бст2105',
+'бст2106', 'бэи2101', 'бэи2102', 'бэи2103', 'биб2101', 'биб2102', 'биб2103', 'биб2104',
+'бап2101', 'бмп2101', 'бут2101', 'бээ2101', 'бэр2101', 'бби2101', 'зрс2101', 'зрс2102',
+'брт2101', 'брт2102', 'бик2101', 'бик2102', 'бик2103', 'бик2104', 'бик2105', 'бик2106',
+'бик2107', 'бик2108', 'бик2109', 'бин2101', 'бин2102', 'бин2103', 'бин2104', 'бин2105',
+'бин2106', 'бин2107', 'бин2108', 'бин2109', 'бин2110']
 FACULTIES_KB = {
     'ИТ': STREAM_IT_BUTTONS_KB,
     'КИИБ': STREAM_KIIB_BUTTONS_KB,
@@ -52,6 +60,7 @@ STREAMS_KB = {
     'бэр': GROUP_BUTTONS_BER_KB,
     'бин': GROUP_BUTTONS_BIN_KB
 }
+RESULTS = []
 
 
 async def schedule(msg: types.Message):
@@ -62,6 +71,8 @@ async def faculties(msg: types.Message):
     if msg.text == 'Вся неделя':
         await msg.answer('Выберите неделю', reply_markup=CURRENT_OR_NEXT_WEEK_KB)
     else:
+        RESULTS.clear()
+        RESULTS.append(msg.text.lower())
         await msg.answer('Выберите факультет', reply_markup=FACULTIES_BUTTONS_KB)
 
 
@@ -73,7 +84,13 @@ async def streams_v2(msg: types.Message):
     await msg.answer('Выберите группу', reply_markup=STREAMS_KB[msg.text.lower()])
 
 
-""" async def groups(msg: types.Message): """
+async def groups(msg: types.Message):
+    RESULTS.append(msg.text.lower())
+    if RESULTS[0] == 'сегодня' or RESULTS[0] == 'завтра':
+        await msg.answer(await print_schedule(RESULTS[0], RESULTS[1]), reply_markup=START_KB)
+    else:
+        await msg.answer(await print_full_schedule(RESULTS[0], RESULTS[1]), reply_markup=START_KB)
+    RESULTS.clear()
 
 
 
@@ -82,3 +99,4 @@ def register_handlers_schedule(bot_dispatcher: Dispatcher):
     bot_dispatcher.register_message_handler(streams, filters.Text(equals=FACULTIES, ignore_case=True))
     bot_dispatcher.register_message_handler(streams_v2, filters.Text(equals=STREAMS, ignore_case=True))
     bot_dispatcher.register_message_handler(schedule, filters.Text(contains='Расписание', ignore_case=True))
+    bot_dispatcher.register_message_handler(groups, filters.Text(equals=GROUPS, ignore_case=True))
