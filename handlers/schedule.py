@@ -7,17 +7,17 @@ from keyboards.schedule_kb import DAYS_OF_WEEK_KB
 from keyboards.schedule_kb import CURRENT_OR_NEXT_WEEK_KB
 from utils.constants_handlers import DAYS_OF_WEEK, FACULTIES, STREAMS, GROUPS, FACULTIES_KB, STREAMS_KB
 from utils.constants import *
-from utils.sqlite_requests import set_button_blueprint
+from utils.sqlite_requests import database_handler, set_button_blueprint
 from handlers.config import COMMANDS_2 as COMMANDS
 
 RESULTS = []
 
-
+@database_handler()
 async def schedule(msg: types.Message):
     RESULTS.append(msg.text.lower())
     await msg.answer('Выберите день', reply_markup=DAYS_OF_WEEK_KB)
 
-
+@database_handler()
 async def faculties(msg: types.Message):
     RESULTS.append(msg.text.lower())
     if msg.text == 'Вся неделя':
@@ -25,15 +25,15 @@ async def faculties(msg: types.Message):
     else:
         await msg.answer('Выберите факультет', reply_markup=FACULTIES_BUTTONS_KB)
 
-
+@database_handler()
 async def streams(msg: types.Message):
     await msg.answer('Выберите поток', reply_markup=FACULTIES_KB[msg.text.upper()])
 
-
+@database_handler()
 async def streams_v2(msg: types.Message):
     await msg.answer('Выберите группу', reply_markup=STREAMS_KB[msg.text.lower()])
 
-
+@database_handler()
 async def groups(msg: types.Message):
     RESULTS.append(msg.text.lower())
     if RESULTS[0] != 'расписание':

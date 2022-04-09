@@ -3,7 +3,10 @@ from aiogram.dispatcher import filters
 from handlers.config import COMMANDS, COMMANDS_2
 from handlers.schedule import RESULTS
 from keyboards.menu_kb import START_KB
+from utils.sqlite_requests import database_handler
 
+
+@database_handler()
 async def start(msg: types.Message):
     COMMANDS_2.clear()
     RESULTS.clear()

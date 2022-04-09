@@ -1,12 +1,10 @@
-from lib2to3.pgen2.token import COMMA
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import filters
 import keyboards.config_kb as config_kb
 from schedule.sheethandler import print_full_schedule, print_schedule
 import keyboards.schedule_kb as schedule_kb
 from utils.sqlite_requests import database_handler
-from utils.terminal_codes import print_info
-from datetime import datetime
+
 
 
 COMMANDS = []
