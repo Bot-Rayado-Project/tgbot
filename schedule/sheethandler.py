@@ -12,6 +12,8 @@ async def print_schedule(day_type, group):
 
     if day_type == 'завтра':
         day_time_utc += 1
+    if day_time_utc == 6:
+            return 'Занятий нет'
 
     week_checked = await get_week()
     even = True if week_checked == 'четная' else False
@@ -21,19 +23,14 @@ async def print_schedule(day_type, group):
     group = translit(group, language_code='ru', reversed=True)
 
     if day_type == 'завтра':
-        if day_time_utc == 6:
+        if day_time_utc == 7:
             day_of_week = DAYS_ENG[0]
-        elif day_time_utc == 5:
-            return 'Занятий нет'
         else:   
             day_of_week = DAYS_ENG[day_time_utc]
     else:
-        if day_time_utc == 6:
-            return 'Занятий нет'
-        else:
-            day_of_week = DAYS_ENG[day_time_utc]
+        day_of_week = DAYS_ENG[day_time_utc]
 
-    responce = json.loads(await aiohttp_fetch(url='http://rest-service-container:8000/{0}/{1}/{2}/{3}'.format(group, day_of_week, even, False)))
+    responce = json.loads(await aiohttp_fetch(url='http://localhost:8000/schedule/?group={0}&even={1}&day={2}'.format(group, even, day_of_week)))
     output += responce['schedule']
 
     return output
@@ -57,11 +54,10 @@ async def print_full_schedule(day_type, group):
         + 'Неделя: ' + week_checked.capitalize() + '\n' + '⸻⸻⸻⸻⸻\n'
     group = translit(group, language_code='ru', reversed=True)
 
-    responce = json.loads(await aiohttp_fetch(url='http://rest-service-container:8000/{0}/{1}/{2}/{3}'.format(group, 'ponedelnik', even, True)))
-
+    responce = json.loads(await aiohttp_fetch(url='http://localhost:8000/schedule/?group={0}&even={1}'.format(group, even)))
     for i in range(6):
         output += '\n' + DAYS_RU[i].capitalize() + '\n\n'
-        output += responce['schedule'][i][0]
+        output += responce['schedule'][i]['schedule']
         
     return output
 

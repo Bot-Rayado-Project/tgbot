@@ -1,9 +1,13 @@
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import filters
+from handlers.config import COMMANDS, COMMANDS_2
+from handlers.schedule import RESULTS
 from keyboards.menu_kb import START_KB
 
-
 async def start(msg: types.Message):
+    COMMANDS_2.clear()
+    RESULTS.clear()
+    COMMANDS
     await msg.answer('Выберите команду', reply_markup=START_KB)
 
 
