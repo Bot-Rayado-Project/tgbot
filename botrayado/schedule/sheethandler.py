@@ -94,7 +94,7 @@ async def print_full_schedule(day_type, group):
         for i in range(6):
             output += '\n' + DAYS_RU[i].capitalize() + '\n\n'
             output += responce['schedule'][i]['schedule']
-            
+
     except Exception as e:
         logger.error(f'Ошибка в в обращении к rest-service, print_full_schedule, sheethandler.py {e}, {traceback.format_exc()}')
         return None
