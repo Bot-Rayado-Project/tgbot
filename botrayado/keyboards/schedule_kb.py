@@ -1,30 +1,30 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-GROUP_BUTTONS_BFI_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BVT_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BST_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BEI_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BIB_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BAP_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BMP_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BUT_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_ZRC_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BRT_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BIK_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BEE_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BER_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BBI_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-GROUP_BUTTONS_BIN_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BFI_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BVT_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BST_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BEI_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BIB_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BAP_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BMP_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BUT_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_ZRC_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BRT_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BIK_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BEE_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BER_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BBI_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+GROUP_BIN_KB = ReplyKeyboardMarkup(resize_keyboard=True)
 
 
-FACULTIES_BUTTONS_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+FACULTIES_KB = ReplyKeyboardMarkup(resize_keyboard=True)
 
 
-STREAM_IT_BUTTONS_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-STREAM_TSEIMK_BUTTONS_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-STREAM_RIT_BUTTONS_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-STREAM_KIIB_BUTTONS_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-STREAM_SISS_BUTTONS_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+STREAM_IT_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+STREAM_TSEIMK_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+STREAM_RIT_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+STREAM_KIIB_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+STREAM_SISS_KB = ReplyKeyboardMarkup(resize_keyboard=True)
 
 
 DAYS_OF_WEEK_KB = ReplyKeyboardMarkup(resize_keyboard=True)
@@ -77,182 +77,182 @@ CURRENT_OR_NEXT_WEEK_KB.row(
 CURRENT_OR_NEXT_WEEK_KB.row(KeyboardButton('Меню'))
 
 
-FACULTIES_BUTTONS_KB.row(
+FACULTIES_KB.row(
     KeyboardButton(FACULTIES_BUTTONS[0]),
     KeyboardButton(FACULTIES_BUTTONS[1]),
     KeyboardButton(FACULTIES_BUTTONS[2])
 )
-FACULTIES_BUTTONS_KB.row(
+FACULTIES_KB.row(
     KeyboardButton(FACULTIES_BUTTONS[3]),
     KeyboardButton(FACULTIES_BUTTONS[4])
 )
-FACULTIES_BUTTONS_KB.row(KeyboardButton('Меню'))
+FACULTIES_KB.row(KeyboardButton('Меню'))
 
 
-STREAM_IT_BUTTONS_KB.row(
+STREAM_IT_KB.row(
     KeyboardButton(STREAM_IT_BUTTONS[0].upper()),
     KeyboardButton(STREAM_IT_BUTTONS[1].upper()),
     KeyboardButton(STREAM_IT_BUTTONS[2].upper()),
     KeyboardButton(STREAM_IT_BUTTONS[3].upper())
 )
-STREAM_IT_BUTTONS_KB.row(KeyboardButton('Меню'))
+STREAM_IT_KB.row(KeyboardButton('Меню'))
 
 
-STREAM_TSEIMK_BUTTONS_KB.row(
+STREAM_TSEIMK_KB.row(
     KeyboardButton(STREAM_TSEIMK_BUTTONS[0].upper()),
     KeyboardButton(STREAM_TSEIMK_BUTTONS[1].upper()),
     KeyboardButton(STREAM_TSEIMK_BUTTONS[2].upper())
 )
-STREAM_TSEIMK_BUTTONS_KB.row(KeyboardButton('Меню'))
+STREAM_TSEIMK_KB.row(KeyboardButton('Меню'))
 
 
-STREAM_KIIB_BUTTONS_KB.row(
+STREAM_KIIB_KB.row(
     KeyboardButton(STREAM_KIIB_BUTTONS[0].upper()),
     KeyboardButton(STREAM_KIIB_BUTTONS[1].upper()),
     KeyboardButton(STREAM_KIIB_BUTTONS[2].upper())
 )
-STREAM_KIIB_BUTTONS_KB.row(
+STREAM_KIIB_KB.row(
     KeyboardButton(STREAM_KIIB_BUTTONS[3].upper()),
     KeyboardButton(STREAM_KIIB_BUTTONS[4].upper())
 )
-STREAM_KIIB_BUTTONS_KB.row(KeyboardButton('Меню'))
+STREAM_KIIB_KB.row(KeyboardButton('Меню'))
 
 
-STREAM_SISS_BUTTONS_KB.row(KeyboardButton(STREAM_SISS_BUTTONS[0].upper()))
-STREAM_SISS_BUTTONS_KB.row(KeyboardButton('Меню'))
+STREAM_SISS_KB.row(KeyboardButton(STREAM_SISS_BUTTONS[0].upper()))
+STREAM_SISS_KB.row(KeyboardButton('Меню'))
 
 
-STREAM_RIT_BUTTONS_KB.row(
+STREAM_RIT_KB.row(
     KeyboardButton(STREAM_RIT_BUTTONS[0].upper()),
     KeyboardButton(STREAM_RIT_BUTTONS[1].upper())
 )
-STREAM_RIT_BUTTONS_KB.row(KeyboardButton('Меню'))
+STREAM_RIT_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BFI_KB.row(
+GROUP_BFI_KB.row(
     KeyboardButton(GROUP_BUTTONS_BFI[0].upper()),
     KeyboardButton(GROUP_BUTTONS_BFI[1].upper())
 )
-GROUP_BUTTONS_BFI_KB.row(KeyboardButton('Меню'))
+GROUP_BFI_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BVT_KB.row(
+GROUP_BVT_KB.row(
     KeyboardButton(GROUP_BUTTONS_BVT[0].upper()),
     KeyboardButton(GROUP_BUTTONS_BVT[1].upper()),
     KeyboardButton(GROUP_BUTTONS_BVT[2].upper())
 )
-GROUP_BUTTONS_BVT_KB.row(
+GROUP_BVT_KB.row(
     KeyboardButton(GROUP_BUTTONS_BVT[3].upper()),
     KeyboardButton(GROUP_BUTTONS_BVT[4].upper()),
     KeyboardButton(GROUP_BUTTONS_BVT[5].upper())
 )
-GROUP_BUTTONS_BVT_KB.row(
+GROUP_BVT_KB.row(
     KeyboardButton(GROUP_BUTTONS_BVT[6].upper()),
     KeyboardButton(GROUP_BUTTONS_BVT[7].upper())
 )
-GROUP_BUTTONS_BVT_KB.row(KeyboardButton('Меню'))
+GROUP_BVT_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BST_KB.row(
+GROUP_BST_KB.row(
     KeyboardButton(GROUP_BUTTONS_BST[0].upper()),
     KeyboardButton(GROUP_BUTTONS_BST[1].upper()),
     KeyboardButton(GROUP_BUTTONS_BST[2].upper())
 )
-GROUP_BUTTONS_BST_KB.row(
+GROUP_BST_KB.row(
     KeyboardButton(GROUP_BUTTONS_BST[3].upper()),
     KeyboardButton(GROUP_BUTTONS_BST[4].upper()),
     KeyboardButton(GROUP_BUTTONS_BST[5].upper())
 )
-GROUP_BUTTONS_BST_KB.row(KeyboardButton('Меню'))
+GROUP_BST_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BEI_KB.row(
+GROUP_BEI_KB.row(
     KeyboardButton(GROUP_BUTTONS_BEI[0].upper()),
     KeyboardButton(GROUP_BUTTONS_BEI[1].upper()),
     KeyboardButton(GROUP_BUTTONS_BEI[2].upper())
 )
-GROUP_BUTTONS_BEI_KB.row(KeyboardButton('Меню'))
+GROUP_BEI_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BIB_KB.row(
+GROUP_BIB_KB.row(
     KeyboardButton(GROUP_BUTTONS_BIB[0].upper()),
     KeyboardButton(GROUP_BUTTONS_BIB[1].upper()),
     KeyboardButton(GROUP_BUTTONS_BIB[2].upper())
 )
-GROUP_BUTTONS_BIB_KB.row(KeyboardButton(GROUP_BUTTONS_BIB[3].upper()))
-GROUP_BUTTONS_BIB_KB.row(KeyboardButton('Меню'))
+GROUP_BIB_KB.row(KeyboardButton(GROUP_BUTTONS_BIB[3].upper()))
+GROUP_BIB_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BAP_KB.row(KeyboardButton(GROUP_BUTTONS_BAP[0].upper()))
-GROUP_BUTTONS_BAP_KB.row(KeyboardButton('Меню'))
+GROUP_BAP_KB.row(KeyboardButton(GROUP_BUTTONS_BAP[0].upper()))
+GROUP_BAP_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BBI_KB.row(KeyboardButton(GROUP_BUTTONS_BBI[0].upper()))
-GROUP_BUTTONS_BBI_KB.row(KeyboardButton('Меню'))
+GROUP_BBI_KB.row(KeyboardButton(GROUP_BUTTONS_BBI[0].upper()))
+GROUP_BBI_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BMP_KB.row(KeyboardButton(GROUP_BUTTONS_BMP[0].upper()))
-GROUP_BUTTONS_BMP_KB.row(KeyboardButton('Меню'))
+GROUP_BMP_KB.row(KeyboardButton(GROUP_BUTTONS_BMP[0].upper()))
+GROUP_BMP_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BUT_KB.row(KeyboardButton(GROUP_BUTTONS_BUT[0].upper()))
-GROUP_BUTTONS_BUT_KB.row(KeyboardButton('Меню'))
+GROUP_BUT_KB.row(KeyboardButton(GROUP_BUTTONS_BUT[0].upper()))
+GROUP_BUT_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BEE_KB.row(KeyboardButton(GROUP_BUTTONS_BEE[0].upper()))
-GROUP_BUTTONS_BEE_KB.row(KeyboardButton('Меню'))
+GROUP_BEE_KB.row(KeyboardButton(GROUP_BUTTONS_BEE[0].upper()))
+GROUP_BEE_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BER_KB.row(KeyboardButton(GROUP_BUTTONS_BER[0].upper()))
-GROUP_BUTTONS_BER_KB.row(KeyboardButton('Меню'))
+GROUP_BER_KB.row(KeyboardButton(GROUP_BUTTONS_BER[0].upper()))
+GROUP_BER_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_ZRC_KB.row(
+GROUP_ZRC_KB.row(
     KeyboardButton(GROUP_BUTTONS_ZRC[0].upper()),
     KeyboardButton(GROUP_BUTTONS_ZRC[1].upper())
 )
-GROUP_BUTTONS_ZRC_KB.row(KeyboardButton('Меню'))
+GROUP_ZRC_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BRT_KB.row(
+GROUP_BRT_KB.row(
     KeyboardButton(GROUP_BUTTONS_BRT[0].upper()),
     KeyboardButton(GROUP_BUTTONS_BRT[1].upper())
 )
-GROUP_BUTTONS_BRT_KB.row(KeyboardButton('Меню'))
+GROUP_BRT_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BIK_KB.row(
+GROUP_BIK_KB.row(
     KeyboardButton(GROUP_BUTTONS_BIK[0].upper()),
     KeyboardButton(GROUP_BUTTONS_BIK[1].upper()),
     KeyboardButton(GROUP_BUTTONS_BIK[2].upper())
 )
-GROUP_BUTTONS_BIK_KB.row(
+GROUP_BIK_KB.row(
     KeyboardButton(GROUP_BUTTONS_BIK[3].upper()),
     KeyboardButton(GROUP_BUTTONS_BIK[4].upper()),
     KeyboardButton(GROUP_BUTTONS_BIK[5].upper())
 )
-GROUP_BUTTONS_BIK_KB.row(
+GROUP_BIK_KB.row(
     KeyboardButton(GROUP_BUTTONS_BIK[6].upper()),
     KeyboardButton(GROUP_BUTTONS_BIK[7].upper()),
     KeyboardButton(GROUP_BUTTONS_BIK[8].upper())
 )
-GROUP_BUTTONS_BIK_KB.row(KeyboardButton('Меню'))
+GROUP_BIK_KB.row(KeyboardButton('Меню'))
 
 
-GROUP_BUTTONS_BIN_KB.row(
+GROUP_BIN_KB.row(
     KeyboardButton(GROUP_BUTTONS_BIN[0].upper()),
     KeyboardButton(GROUP_BUTTONS_BIN[1].upper()),
     KeyboardButton(GROUP_BUTTONS_BIN[2].upper())
 )
-GROUP_BUTTONS_BIN_KB.row(
+GROUP_BIN_KB.row(
     KeyboardButton(GROUP_BUTTONS_BIN[3].upper()),
     KeyboardButton(GROUP_BUTTONS_BIN[4].upper()),
     KeyboardButton(GROUP_BUTTONS_BIN[5].upper())
 )
-GROUP_BUTTONS_BIN_KB.row(
+GROUP_BIN_KB.row(
     KeyboardButton(GROUP_BUTTONS_BIN[6].upper()),
     KeyboardButton(GROUP_BUTTONS_BIN[7].upper()),
     KeyboardButton(GROUP_BUTTONS_BIN[8].upper())
 )
-GROUP_BUTTONS_BIN_KB.row(KeyboardButton(GROUP_BUTTONS_BIN[9].upper()))
-GROUP_BUTTONS_BIN_KB.row(KeyboardButton('Меню'))
+GROUP_BIN_KB.row(KeyboardButton(GROUP_BUTTONS_BIN[9].upper()))
+GROUP_BIN_KB.row(KeyboardButton('Меню'))
