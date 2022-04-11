@@ -48,7 +48,7 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
         await msg.answer('Выберите последовательность шаблона', reply_markup=schedule_kb.DAYS_OF_WEEK_KB)
 
     
-    if '1 ячейка' not in COMMANDS and '2 ячейка' not in COMMANDS and '3 ячейка' not in COMMANDS:
+    elif '1 ячейка' not in COMMANDS and '2 ячейка' not in COMMANDS and '3 ячейка' not in COMMANDS:
         res = COMMANDS[0].split(' ')
         if res[0] == 'СН':
             await msg.answer(await print_full_schedule('следующая неделя', res[1].lower()), reply_markup=START_KB, parse_mode="HTML")
