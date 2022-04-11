@@ -157,7 +157,7 @@ async def groups(msg: types.Message):
                     schedule = await print_schedule(RESULTS[1], RESULTS[-1])
 
                     if schedule == None:
-                        logger.error(f'Ошибка в выводе одного дня, groups, schedule.py{e}, {traceback.format_exc()}')
+                        logger.error(f'Ошибка в выводе одного дня, groups, schedule.py, {traceback.format_exc()}')
                         await msg.answer('Непредвиденная ошибка, отправьте информацию запросов, с последнего вывода, разработчикам', reply_markup=START_KB)
 
                     else:
@@ -172,7 +172,7 @@ async def groups(msg: types.Message):
                     schedule = await print_full_schedule(RESULTS[2], RESULTS[-1])
 
                     if schedule == None:
-                        logger.error(f'Ошибка в выводе всей недели, groups, schedule.py{e}, {traceback.format_exc()}')
+                        logger.error(f'Ошибка в выводе всей недели, groups, schedule.py, {traceback.format_exc()}')
                         await msg.answer('Непредвиденная ошибка, отправьте информацию запросов, с последнего вывода, разработчикам', reply_markup=START_KB)
 
                     else:
