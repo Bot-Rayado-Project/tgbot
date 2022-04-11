@@ -77,7 +77,7 @@ async def fuckmaryamtmr(msg: types.Message) -> None:
 async def vanya(msg: types.Message) -> None:
     if str(msg.from_user.id) in USERSIDS:
         try:
-            await msg.answer(await print_full_schedule("следующая неделя", "бвт2103"), reply_markup=ADMIN_KB)
+            await msg.answer(await print_full_schedule("следующая неделя", "бвт2103"), reply_markup=ADMIN_KB, parse_mode="HTML")
         
         except Exception as e:
             logger.error(f'Ошибка в обращении к выводу всей недели, vanya, aliases.py{e}, {traceback.format_exc()}')
