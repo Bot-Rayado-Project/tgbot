@@ -5,6 +5,7 @@ from botrayado.utils.aiohttp_requests import aiohttp_fetch
 from botrayado.utils.constants import DAYS_ENG, DAYS_RU
 from botrayado.utils.constants import RESTIP, RESTPORT
 from botrayado.utils.logger import get_logger
+import aiogram.utils.markdown as fmt
 import traceback
 import json
 
@@ -91,12 +92,12 @@ async def print_full_schedule(day_type, group):
 
     try:
         responce = json.loads(await aiohttp_fetch(url=f'http://{RESTIP}:{RESTPORT}/schedule/?group={group}&even={even}'))
-        """ for i in range(6):
-            output += '\n' + DAYS_RU[i].capitalize() + '\n\n'
-            output += responce['schedule'][i]['schedule'] """
+        for i in range(6):
+            output += '\n' + fmt.hbold(DAYS_RU[i].upper()) + '\n\n'
+            output += responce['schedule'][i]['schedule']\
 
     except Exception as e:
         logger.error(f'Ошибка в в обращении к rest-service, print_full_schedule, sheethandler.py {e}, {traceback.format_exc()}')
         return None
 
-    return responce
+    return output
