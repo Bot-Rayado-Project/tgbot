@@ -176,7 +176,12 @@ async def groups(msg: types.Message):
                         await msg.answer('Непредвиденная ошибка, отправьте информацию запросов, с последнего вывода, разработчикам', reply_markup=START_KB)
 
                     else:
-                        await msg.answer(schedule, reply_markup=START_KB)
+
+                        for i in range(6):
+                            output = ''
+                            output += '\n' + DAYS_RU[i].capitalize() + '\n\n'
+                            output += schedule['schedule'][i]['schedule']
+                            await msg.answer(output, reply_markup=START_KB)
 
                 except Exception as e:
                         logger.error(f'Ошибка в обращении к выводу всей недели, groups, schedule.py{e}, {traceback.format_exc()}')

@@ -9,13 +9,11 @@ from botrayado.database.db import database_handler
 
 COMMANDS = []
 COMMANDS_2 = []
-COMMANDS_3 = []
 btns = ['1', '2', '3', 'С', 'З', 'Т']
 
 
 @database_handler(ret_cfg=True)
 async def config_start(msg: types.Message, buttons: list) -> None:
-    COMMANDS_3.append(msg.text)
 
     if buttons == []:
         CONFIG_KB = config_kb.create_config_keyboard(
@@ -32,16 +30,13 @@ async def config_start(msg: types.Message, buttons: list) -> None:
 async def create_blueprint_start(msg: types.Message,
                                  buttons: list) -> None:
                                  
-    if 'Шаблоны расписания' in COMMANDS_3:
-        COMMANDS.append(msg.text)
-        COMMANDS_2.append(msg.text)
+    COMMANDS.append(msg.text)
+    COMMANDS_2.append(msg.text)
 
-        CONFIG_KB = config_kb.create_config_keyboard(buttons, False, False)
+    CONFIG_KB = config_kb.create_config_keyboard(buttons, False, False)
 
-        await msg.answer('Выберите ячейку для (пере-)записи.',
-                     reply_markup=CONFIG_KB)
-    else:
-        await msg.answer('Неправильная команда', reply_markup=START_KB)
+    await msg.answer('Выберите ячейку для (пере-)записи.',
+                reply_markup=CONFIG_KB)
 
 
 @database_handler(ret_cfg=True)
@@ -49,28 +44,22 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
     COMMANDS.append(msg.text)
     COMMANDS_2.append(msg.text)
 
-    if 'Создать шаблон' in COMMANDS and 'Шаблоны расписания' in COMMANDS_3:
+    if 'Создать шаблон' in COMMANDS:
         await msg.answer('Выберите последовательность шаблона', reply_markup=schedule_kb.DAYS_OF_WEEK_KB)
 
-    elif 'Шаблоны расписания' in COMMANDS_3:
-        if '1 ячейка' not in COMMANDS and '2 ячейка' not in COMMANDS and '3 ячейка' not in COMMANDS:
-            res = COMMANDS[0].split(' ')
-
-            if res[0] == 'СН':
-                await msg.answer(await print_full_schedule('следующая неделя', res[1].lower()))
-
-            elif res[0] == 'ТН':
-
-                await msg.answer(await print_full_schedule('текущая неделя', res[1].lower()))
-            else:
-                await msg.answer(await print_schedule(res[0].lower(), res[1].lower()))
-
+    
+    if '1 ячейка' not in COMMANDS and '2 ячейка' not in COMMANDS and '3 ячейка' not in COMMANDS:
+        res = COMMANDS[0].split(' ')
+        if res[0] == 'СН':
+            await msg.answer(await print_full_schedule('следующая неделя', res[1].lower()))
+        elif res[0] == 'ТН':
+            await msg.answer(await print_full_schedule('текущая неделя', res[1].lower()))
         else:
-            await msg.answer('Ячейка пуста', reply_markup=config_kb.create_config_keyboard(buttons, True, False))
+            await msg.answer(await print_schedule(res[0].lower(), res[1].lower()))
     else:
-        await msg.answer('Неправильная команда', reply_markup=START_KB)
+        await msg.answer('Ячейка пуста', reply_markup=config_kb.create_config_keyboard(buttons, True, False))
+    
         
-    COMMANDS_3.clear()
     COMMANDS.clear()
 
 
