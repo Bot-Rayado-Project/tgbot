@@ -1,6 +1,8 @@
+from email import message
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import filters
-from botrayado.schedule.sheethandler import print_full_schedule, print_schedule
+from botrayado.schedule.sheethandler import print_full_schedule
+from botrayado.schedule.sheethandler import print_schedule
 from botrayado.keyboards.menu_kb import START_KB
 from botrayado.keyboards.schedule_kb import FACULTIES_KB
 from botrayado.keyboards.schedule_kb import DAYS_OF_WEEK_KB
@@ -18,8 +20,11 @@ logger = get_logger(__name__)
 
 @database_handler()
 async def schedule(msg: types.Message):
+
     RESULTS.append(msg.text.lower())
-    await msg.answer('Выберите день', reply_markup=DAYS_OF_WEEK_KB)
+    message = 'Выберите день'
+    await msg.answer(message, reply_markup=DAYS_OF_WEEK_KB)
+    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
 
 @database_handler()
@@ -30,22 +35,35 @@ async def faculties(msg: types.Message):
         if RESULTS[0] == 'расписание' or COMMANDS != []:
 
             if RESULTS[-1] == 'вся неделя':
-                await msg.answer('Выберите неделю', reply_markup=CURRENT_OR_NEXT_WEEK_KB)
 
-            elif RESULTS[-1] == 'завтра' or RESULTS[-1] == 'сегодня' or RESULTS[-1] == 'текущая неделя' or RESULTS[-1] == 'следующая неделя':
-                await msg.answer('Выберите факультет', reply_markup=FACULTIES_KB)
+                message = 'Выберите неделю'
+                await msg.answer(message, reply_markup=CURRENT_OR_NEXT_WEEK_KB)
+                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
+
+            elif (RESULTS[-1] == 'завтра' or RESULTS[-1] == 'сегодня' or RESULTS[-1] == 'текущая неделя'
+                        or RESULTS[-1] == 'следующая неделя'):
+
+                message = 'Выберите факультет'
+                await msg.answer(message, reply_markup=FACULTIES_KB)
+                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
             else:
+
                 RESULTS.clear()
-                await msg.answer('Неправильная команда', reply_markup=START_KB)
+                message = 'Неправильная команда'
+                await msg.answer(message, reply_markup=START_KB)
 
         else:
+
             RESULTS.clear()
+            message = 'Неправильная команда'
             await msg.answer('Неправильная команда', reply_markup=START_KB)
+            logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
     except Exception as e:
-        logger.error(f'Ошибка в обращении к RESULTS в faculties, schedule.py {e}, {traceback.format_exc()}')
-        await msg.answer('Непредвиденная ошибка, отправьте информацию запросов с последнего вывода разработчикам', reply_markup=START_KB)
+        logger.error(
+        f'Ошибка в обращении к RESULTS в faculties, schedule.py {e}, {traceback.format_exc()}')
+        await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
 
 @database_handler()
@@ -56,26 +74,43 @@ async def streams(msg: types.Message):
         if RESULTS[0] == 'расписание' or COMMANDS != []:
             if RESULTS[-1] in [i.lower() for i in FACULTIES]:
                 if RESULTS[-2] == 'сегодня' or RESULTS[-2] == 'завтра':
-                    await msg.answer('Выберите поток', reply_markup=FACULTIES_KB_BUTTONS[msg.text.upper()])
 
-                elif (RESULTS[-3] == 'вся неделя' and (RESULTS[-2] == 'текущая неделя' or RESULTS[-2] == 'следующая неделя')):
-                    await msg.answer('Выберите поток', reply_markup=FACULTIES_KB_BUTTONS[msg.text.upper()])
+                    message = 'Выберите поток'
+                    await msg.answer(message, reply_markup=FACULTIES_KB_BUTTONS[msg.text.upper()])
+                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
+
+                elif (RESULTS[-3] == 'вся неделя' and (RESULTS[-2] == 'текущая неделя' 
+                            or RESULTS[-2] == 'следующая неделя')):
+
+                    message = 'Выберите поток'
+                    await msg.answer(message, reply_markup=FACULTIES_KB_BUTTONS[msg.text.upper()])
+                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
                 else:
+
                     RESULTS.clear()
-                    await msg.answer('Неправильная команда', reply_markup=START_KB)
+                    message = 'Неправильная команда'
+                    await msg.answer(message, reply_markup=START_KB)
+                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
             else:
+
                 RESULTS.clear()
-                await msg.answer('Неправильная команда', reply_markup=START_KB)
+                message = 'Неправильная команда'
+                await msg.answer(message, reply_markup=START_KB)
+                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
         else:
+
             RESULTS.clear()
-            await msg.answer('Неправильная команда', reply_markup=START_KB)
+            message = 'Неправильная команда'
+            await msg.answer(message, reply_markup=START_KB)
+            logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
     except Exception as e:
-        logger.error(f'Ошибка в обращении к RESULTS в streams, schedule.py {e}, {traceback.format_exc()}')
-        await msg.answer('Непредвиденная ошибка, отправьте информацию запросов с последнего вывода разработчикам', reply_markup=START_KB)
+        logger.error(
+            f'Ошибка в обращении к RESULTS в streams, schedule.py {e}, {traceback.format_exc()}')
+        await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
 
 @database_handler()
@@ -90,32 +125,51 @@ async def streams_v2(msg: types.Message):
                 if RESULTS[-1] in [i.lower() for i in STREAMS]:
 
                     if (RESULTS[-3] == 'текущая неделя' or RESULTS[-3] == 'следующая неделя'):
-                        await msg.answer('Выберите группу', reply_markup=STREAMS_KB[msg.text.lower()])
+
+                        message = 'Выберите группу'
+                        await msg.answer(message, reply_markup=STREAMS_KB[msg.text.lower()])
+                        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
                     elif RESULTS[-3] == 'сегодня' or RESULTS[-3] == 'завтра':
+                        
+                        message = 'Выберите группу',
                         await msg.answer('Выберите группу', reply_markup=STREAMS_KB[msg.text.lower()])
+                        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
                     else:
+
                         RESULTS.clear()
-                        await msg.answer('Неправильная команда', reply_markup=START_KB)
+                        message = 'Неправильная команда'
+                        await msg.answer(message, reply_markup=START_KB)
+                        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
                 else:
+
                     RESULTS.clear()
-                    await msg.answer('Неправильная команда', reply_markup=START_KB)
+                    message = 'Неправильная команда'
+                    await msg.answer(message, reply_markup=START_KB)
+                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
             else:
+
                 RESULTS.clear()
-                await msg.answer('Неправильная команда', reply_markup=START_KB)
+                message = 'Неправильная команда'
+                await msg.answer(message, reply_markup=START_KB)
+                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
         else:
-            RESULTS.clear()
-            await msg.answer('Неправильная команда', reply_markup=START_KB)
-    
-    except Exception as e:
-        logger.error(f'Ошибка в обращении к RESULTS в streams_v2, schedule.py {e}, {traceback.format_exc()}')
-        await msg.answer('Непредвиденная ошибка, отправьте информацию запросов с последнего вывода разработчикам', reply_markup=START_KB)
 
-        
+            RESULTS.clear()
+            message = 'Неправильная команда'
+            await msg.answer(message, reply_markup=START_KB)
+            logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
+
+    except Exception as e:
+        logger.error(
+            f'Ошибка в обращении к RESULTS в streams_v2, schedule.py {e}, {traceback.format_exc()}')
+        await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
+
+
 @database_handler()
 async def groups(msg: types.Message):
     RESULTS.append(msg.text.lower())
@@ -130,11 +184,13 @@ async def groups(msg: types.Message):
                             str(RESULTS[1][0].upper() + 'Н ' + RESULTS[-1].upper()), msg, COMMANDS[-1])
 
                     except Exception as e:
-                        logger.error(f'Ошибка в сохранении шаблона для всей недели, groups, schedule.py{e}, {traceback.format_exc()}')
-                        await msg.answer('Непредвиденная ошибка, отправьте информацию запросов с последнего вывода разработчикам', reply_markup=START_KB)
+                        logger.error(
+                            f'Ошибка в сохранении шаблона для всей недели, groups, schedule.py{e}, {traceback.format_exc()}')
+                        await msg.answer('Непредвиденная ошибкa', reply_markup=START_KB)
 
-                    await msg.answer('Шаблон записан: {0}Н {1}'.format(RESULTS[1][0].upper(), RESULTS[-1].upper()),
-                                     reply_markup=START_KB)
+                    message = f'Шаблон записан: {RESULTS[1][0].upper()}Н {RESULTS[-1].upper()}'
+                    await msg.answer(message, reply_markup=START_KB)
+                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
                 else:
                     try:
@@ -142,14 +198,19 @@ async def groups(msg: types.Message):
                             str(RESULTS[0].capitalize() + ' ' + RESULTS[-1].upper()), msg, COMMANDS[-1])
 
                     except Exception as e:
-                        logger.error(f'Ошибка в сохранении шаблона для одного дня, groups, schedule.py{e}, {traceback.format_exc()}')
-                        await msg.answer('Непредвиденная ошибка, отправьте информацию запросов с последнего вывода разработчикам', reply_markup=START_KB)
+                        logger.error(
+                            f'Ошибка в сохранении шаблона для одного дня, groups, schedule.py{e}, {traceback.format_exc()}')
+                        await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
-                    await msg.answer('Шаблон записан: {0} {1}'.format(RESULTS[0].capitalize(), RESULTS[-1].upper()),
-                                     reply_markup=START_KB)
+                    message = f'Шаблон записан: {RESULTS[0].capitalize()} {RESULTS[-1].upper()}'
+                    await msg.answer(message, reply_markup=START_KB)
+                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
+
             else:
                 RESULTS.clear()
-                await msg.answer('Неправильная команда', reply_markup=START_KB)
+                message = 'Неправильная команда'
+                await msg.answer(message, reply_markup=START_KB)
+                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
         else:
             if RESULTS[1] == 'сегодня' or RESULTS[1] == 'завтра':
@@ -157,36 +218,45 @@ async def groups(msg: types.Message):
                     schedule = await print_schedule(RESULTS[1], RESULTS[-1])
 
                     if schedule == None:
-                        logger.error(f'Ошибка в выводе одного дня, groups, schedule.py, {traceback.format_exc()}')
-                        await msg.answer('Непредвиденная ошибка, отправьте информацию запросов, с последнего вывода, разработчикам', reply_markup=START_KB)
+                        logger.error(
+                            f'Ошибка в выводе одного дня, groups, schedule.py, {traceback.format_exc()}')
+                        await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
                     else:
+
                         await msg.answer(schedule, reply_markup=START_KB)
+                        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
                 except Exception as e:
-                    logger.error(f'Ошибка в обращении к выводу одного дня, groups, schedule.py{e}, {traceback.format_exc()}')
-                    await msg.answer('Непредвиденная ошибка, отправьте информацию запросов, с последнего вывода, разработчикам', reply_markup=START_KB)
+                    logger.error(
+                        f'Ошибка в обращении к выводу одного дня, groups, schedule.py{e}, {traceback.format_exc()}')
+                    await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
             if RESULTS[1] == 'вся неделя':
                 try:
                     schedule = await print_full_schedule(RESULTS[2], RESULTS[-1])
 
                     if schedule == None:
-                        logger.error(f'Ошибка в выводе всей недели, groups, schedule.py, {traceback.format_exc()}')
-                        await msg.answer('Непредвиденная ошибка, отправьте информацию запросов, с последнего вывода, разработчикам', reply_markup=START_KB)
+                        logger.error(
+                            f'Ошибка в выводе всей недели, groups, schedule.py, {traceback.format_exc()}')
+                        await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
                     else:
+
                         await msg.answer(schedule, reply_markup=START_KB, parse_mode='HTML')
+                        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
                 except Exception as e:
-                        logger.error(f'Ошибка в обращении к выводу всей недели, groups, schedule.py{e}, {traceback.format_exc()}')
-                        await msg.answer('Непредвиденная ошибка, отправьте информацию запросов, с последнего вывода, разработчикам', reply_markup=START_KB)
+                    logger.error(
+                        f'Ошибка в обращении к выводу всей недели, groups, schedule.py{e}, {traceback.format_exc()}')
+                    await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
         COMMANDS.clear()
         RESULTS.clear()
 
     except Exception as e:
-        logger.error(f'Ошибка в обращении к RESULTS в groups, schedule.py {e}, {traceback.format_exc()}')
-        await msg.answer('Непредвиденная ошибка, отправьте информацию запросов, с последнего вывода, разработчикам', reply_markup=START_KB)
+        logger.error(
+            f'Ошибка в обращении к RESULTS в groups, schedule.py {e}, {traceback.format_exc()}')
+        await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
 
 def register_handlers_schedule(bot_dispatcher: Dispatcher):

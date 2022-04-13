@@ -5,7 +5,11 @@ from botrayado.schedule.sheethandler import print_full_schedule, print_schedule
 import botrayado.keyboards.schedule_kb as schedule_kb
 from botrayado.keyboards.menu_kb import START_KB
 from botrayado.database.db import database_handler
+from botrayado.utils.logger import get_logger
+import traceback
 
+
+logger = get_logger(__name__)
 
 COMMANDS = []
 COMMANDS_2 = []
@@ -22,8 +26,9 @@ async def config_start(msg: types.Message, buttons: list) -> None:
     else:
         CONFIG_KB = config_kb.create_config_keyboard(buttons, True, False)
 
-    await msg.answer('Выберите шаблон или создайте новый.',
-                     reply_markup=CONFIG_KB)
+    message = 'Выберите шаблон или создайте новый.'
+    await msg.answer(message,reply_markup=CONFIG_KB)
+    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(message))
 
 
 @database_handler(ret_cfg=True)
@@ -35,8 +40,9 @@ async def create_blueprint_start(msg: types.Message,
 
     CONFIG_KB = config_kb.create_config_keyboard(buttons, False, False)
 
-    await msg.answer('Выберите ячейку для (пере-)записи.',
-                reply_markup=CONFIG_KB)
+    message = 'Выберите ячейку для (пере-)записи.'
+    await msg.answer(message, reply_markup=CONFIG_KB)
+    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(message))
 
 
 @database_handler(ret_cfg=True)
@@ -45,19 +51,57 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
     COMMANDS_2.append(msg.text)
 
     if 'Создать шаблон' in COMMANDS:
-        await msg.answer('Выберите последовательность шаблона', reply_markup=schedule_kb.DAYS_OF_WEEK_KB)
+        message = 'Выберите последовательность шаблона'
+        await msg.answer(message, reply_markup=schedule_kb.DAYS_OF_WEEK_KB)
+        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(message))
 
     
     elif '1 ячейка' not in COMMANDS and '2 ячейка' not in COMMANDS and '3 ячейка' not in COMMANDS:
         res = COMMANDS[0].split(' ')
         if res[0] == 'СН':
-            await msg.answer(await print_full_schedule('следующая неделя', res[1].lower()), parse_mode="HTML")
+
+            schedule = await print_full_schedule('следующая неделя', res[1].lower())
+            if schedule == None:
+
+                message = 'Непредвиденная ошибка'
+                await msg.answer(message, reply_markup=START_KB)
+                logger.error(f'Ошибка в выводе расписания в choose_cells_handler, config.py, {traceback.format_exc()}')
+
+            else:
+        
+                await msg.answer(schedule, parse_mode="HTML")
+                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
+
         elif res[0] == 'ТН':
-            await msg.answer(await print_full_schedule('текущая неделя', res[1].lower()), parse_mode="HTML")
+            schedule = await print_full_schedule('текущая неделя', res[1].lower())
+            if schedule == None:
+
+                message = 'Непредвиденная ошибка'
+                await msg.answer(message, reply_markup=START_KB)
+                logger.error(f'Ошибка в выводе расписания в choose_cells_handler, config.py, {traceback.format_exc()}')
+
+            else:
+
+                await msg.answer(schedule, parse_mode="HTML")
+                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
+
         else:
-            await msg.answer(await print_schedule(res[0].lower(), res[1].lower()))
+            schedule = await print_schedule(res[0].lower(), res[1].lower())
+            if schedule == None:
+
+                message = 'Непредвиденная ошибка'
+                await msg.answer(message, reply_markup=START_KB)
+                logger.error(f'Ошибка в выводе расписания в choose_cells_handler, config.py, {traceback.format_exc()}')
+
+            else:
+                await msg.answer(schedule, parse_mode="HTML")
+                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
+
     else:
-        await msg.answer('Ячейка пуста', reply_markup=config_kb.create_config_keyboard(buttons, True, False))
+
+        message = 'Ячейка пуста'
+        await msg.answer(message, reply_markup=config_kb.create_config_keyboard(buttons, True, False))
+        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(message))
     
         
     COMMANDS.clear()

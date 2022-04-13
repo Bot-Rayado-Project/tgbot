@@ -1,9 +1,4 @@
 from datetime import datetime, timedelta
-""" from botrayado.utils.logger import get_logger
-import traceback """
-
-
-""" logger = get_logger(__name__) """
 
 
 async def get_week() -> str:
@@ -26,7 +21,3 @@ async def get_week() -> str:
         return 'четная'
     else:
         return 'нечетная'
-
-    """ except Exception as e:
-        logger.error(f'Ошибка в определении недели, whataweek.py {e}, {traceback.format_exc()}')
-        return None """

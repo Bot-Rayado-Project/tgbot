@@ -25,7 +25,7 @@ def database_handler(ret_cfg: bool = False):
     def decorator(func: typing.Callable[..., typing.Any]):
         async def wrapper(msg: types.Message) -> str:
 
-            logger.info(f'{msg.from_user.username} : {msg.text}')
+            logger.info(f'Request: {msg.from_user.username} - {msg.text}')
             cursor.execute(ADD_COMMAND.format(msg.from_user.id, msg.text))
             sqlite_connection.commit()
             if ret_cfg:

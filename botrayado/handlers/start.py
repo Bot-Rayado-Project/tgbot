@@ -4,19 +4,29 @@ from botrayado.handlers.config import COMMANDS_2 as COMMANDS
 from botrayado.keyboards.menu_kb import START_KB
 from botrayado.database.db import database_handler
 from botrayado.handlers.schedule import RESULTS
+from utils.logger import get_logger
+
 
 START_PHRASES = ['начать', 'старт', '/начать', '/start', 'start']
+logger = get_logger(__name__)
 
 
 @database_handler()
 async def start(msg: types.Message):
+
     if RESULTS == [] and COMMANDS == []:
-        await msg.answer('Бот находится в разработке. В случае ошибок, просьба сообщить разработчикам, ' +
-                     'чтобы мы исправили. \n@ALPHA_KENNYBODY\n@darttusin',
-                     reply_markup=START_KB)
+        message = 'Бот находится в разработке. В случае ошибок,' +\
+            'просьба сообщить разработчикам, ' +\
+            'чтобы мы исправили. \n@ALPHA_KENNYBODY\n@darttusin'
+
+        await msg.answer(message, reply_markup=START_KB)
+        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + 'Start printed')
+
     else:
         RESULTS.clear()
-        await msg.answer('Неправильная команда', reply_markup=START_KB)
+        message = 'Неправильная команда'
+        await msg.answer(message, reply_markup=START_KB)
+        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(message))
 
 
 def register_handlers_start(bot_dispatcher: Dispatcher):
