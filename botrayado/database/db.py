@@ -3,7 +3,6 @@ from aiogram import types
 import typing
 import sqlite3
 from botrayado.utils.logger import get_logger
-import traceback
 
 
 logger = get_logger(__name__)
@@ -25,7 +24,8 @@ sqlite_connection, cursor = set_up_connection_with_db("botrayado/database/db/use
 def database_handler(ret_cfg: bool = False):
     def decorator(func: typing.Callable[..., typing.Any]):
         async def wrapper(msg: types.Message) -> str:
-            
+
+            logger.info(f'{msg.from_user.username} : {msg.text}')
             cursor.execute(ADD_COMMAND.format(msg.from_user.id, msg.text))
             sqlite_connection.commit()
             if ret_cfg:
