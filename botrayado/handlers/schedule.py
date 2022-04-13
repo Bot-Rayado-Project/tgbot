@@ -1,4 +1,3 @@
-from email import message
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import filters
 from botrayado.schedule.sheethandler import print_full_schedule
@@ -11,6 +10,7 @@ from botrayado.utils.constants import *
 from botrayado.database.db import database_handler, set_button_blueprint
 from botrayado.handlers.config import COMMANDS_2 as COMMANDS
 from botrayado.utils.logger import get_logger
+from datetime import date, datetime
 import traceback
 
 
@@ -172,6 +172,7 @@ async def streams_v2(msg: types.Message):
 
 @database_handler()
 async def groups(msg: types.Message):
+    start_time = datetime.datetime.now()
     RESULTS.append(msg.text.lower())
 
     try:
@@ -225,6 +226,7 @@ async def groups(msg: types.Message):
                     else:
 
                         await msg.answer(schedule, reply_markup=START_KB)
+                        logger.info('Time of table out: ' + str(datetime.datetime.now() - start_time))
                         logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
                 except Exception as e:
@@ -242,8 +244,9 @@ async def groups(msg: types.Message):
                         await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
                     else:
-
+                        
                         await msg.answer(schedule, reply_markup=START_KB, parse_mode='HTML')
+                        logger.info('Time of table out: ' + str(datetime.datetime.now() - start_time))
                         logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
                 except Exception as e:

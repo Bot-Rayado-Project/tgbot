@@ -1,3 +1,4 @@
+from datetime import datetime
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import filters
 import botrayado.keyboards.config_kb as config_kb
@@ -47,6 +48,7 @@ async def create_blueprint_start(msg: types.Message,
 
 @database_handler(ret_cfg=True)
 async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
+    start_time = datetime.datetime.now()
     COMMANDS.append(msg.text)
     COMMANDS_2.append(msg.text)
 
@@ -70,9 +72,11 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
             else:
         
                 await msg.answer(schedule, parse_mode="HTML")
+                logger.info('Time of table out: ' + str(datetime.datetime.now() - start_time))
                 logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
         elif res[0] == 'ТН':
+
             schedule = await print_full_schedule('текущая неделя', res[1].lower())
             if schedule == None:
 
@@ -83,6 +87,7 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
             else:
 
                 await msg.answer(schedule, parse_mode="HTML")
+                logger.info('Time of table out: ' + str(datetime.datetime.now() - start_time))
                 logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
         else:
@@ -95,6 +100,7 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
 
             else:
                 await msg.answer(schedule, parse_mode="HTML")
+                logger.info('Time of table out: ' + str(datetime.datetime.now() - start_time))
                 logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
     else:
