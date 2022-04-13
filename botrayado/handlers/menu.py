@@ -1,6 +1,4 @@
 from asyncio.log import logger
-from email import message
-from webbrowser import get
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import filters
 from botrayado.handlers.config import COMMANDS, COMMANDS_2

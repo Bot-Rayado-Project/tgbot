@@ -1,5 +1,3 @@
-from operator import imod
-from webbrowser import get
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import filters
 from botrayado.keyboards.menu_kb import START_KB

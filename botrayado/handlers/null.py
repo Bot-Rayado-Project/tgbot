@@ -1,5 +1,3 @@
-from email import message
-from webbrowser import get
 from aiogram import types, Dispatcher
 from botrayado.keyboards.menu_kb import START_KB
 from botrayado.database.db import database_handler

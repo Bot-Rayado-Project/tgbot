@@ -10,7 +10,7 @@ from botrayado.utils.constants import *
 from botrayado.database.db import database_handler, set_button_blueprint
 from botrayado.handlers.config import COMMANDS_2 as COMMANDS
 from botrayado.utils.logger import get_logger
-from datetime import date, datetime
+from datetime import datetime
 import traceback
 
 
