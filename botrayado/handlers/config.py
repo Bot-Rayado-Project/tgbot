@@ -51,9 +51,9 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
     elif '1 ячейка' not in COMMANDS and '2 ячейка' not in COMMANDS and '3 ячейка' not in COMMANDS:
         res = COMMANDS[0].split(' ')
         if res[0] == 'СН':
-            await msg.answer(await print_full_schedule('следующая неделя', res[1].lower()), reply_markup=START_KB, parse_mode="HTML")
+            await msg.answer(await print_full_schedule('следующая неделя', res[1].lower()), parse_mode="HTML")
         elif res[0] == 'ТН':
-            await msg.answer(await print_full_schedule('текущая неделя', res[1].lower()), reply_markup=START_KB, parse_mode="HTML")
+            await msg.answer(await print_full_schedule('текущая неделя', res[1].lower()), parse_mode="HTML")
         else:
             await msg.answer(await print_schedule(res[0].lower(), res[1].lower()))
     else:
@@ -66,7 +66,7 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
 def register_handler_config(bot_dispatcher: Dispatcher):
     bot_dispatcher.register_message_handler(config_start, filters.Text(
         contains='Шаблоны расписания', ignore_case=True))
-    bot_dispatcher.register_message_handler(create_blueprint_start, filters.Text(
+    bot_dispatcher.register_message_handler(create_blueprint_start, filters.Text( 
         contains='Создать шаблон', ignore_case=True))
     bot_dispatcher.register_message_handler(choose_cells_handler, filters.Text(
         startswith=btns, ignore_case=True))
