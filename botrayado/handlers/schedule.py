@@ -172,7 +172,7 @@ async def streams_v2(msg: types.Message):
 
 @database_handler()
 async def groups(msg: types.Message):
-    start_time = datetime.datetime.now()
+    start_time = datetime.now()
     RESULTS.append(msg.text.lower())
 
     try:
@@ -226,7 +226,7 @@ async def groups(msg: types.Message):
                     else:
 
                         await msg.answer(schedule, reply_markup=START_KB)
-                        logger.info('Time of table out: ' + str(datetime.datetime.now() - start_time))
+                        logger.info('Time of table out: ' + str(datetime.now() - start_time))
                         logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
                 except Exception as e:
@@ -246,7 +246,7 @@ async def groups(msg: types.Message):
                     else:
                         
                         await msg.answer(schedule, reply_markup=START_KB, parse_mode='HTML')
-                        logger.info('Time of table out: ' + str(datetime.datetime.now() - start_time))
+                        logger.info('Time of table out: ' + str(datetime.now() - start_time))
                         logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
                 except Exception as e:

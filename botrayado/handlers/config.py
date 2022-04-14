@@ -48,7 +48,7 @@ async def create_blueprint_start(msg: types.Message,
 
 @database_handler(ret_cfg=True)
 async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
-    start_time = datetime.datetime.now()
+    start_time = datetime.now()
     COMMANDS.append(msg.text)
     COMMANDS_2.append(msg.text)
 
@@ -72,7 +72,7 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
             else:
         
                 await msg.answer(schedule, parse_mode="HTML")
-                logger.info('Time of table out: ' + str(datetime.datetime.now() - start_time))
+                logger.info('Time of table out: ' + str(datetime.now() - start_time))
                 logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
         elif res[0] == 'ТН':
@@ -87,7 +87,7 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
             else:
 
                 await msg.answer(schedule, parse_mode="HTML")
-                logger.info('Time of table out: ' + str(datetime.datetime.now() - start_time))
+                logger.info('Time of table out: ' + str(datetime.now() - start_time))
                 logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
         else:
@@ -100,7 +100,7 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
 
             else:
                 await msg.answer(schedule, parse_mode="HTML")
-                logger.info('Time of table out: ' + str(datetime.datetime.now() - start_time))
+                logger.info('Time of table out: ' + str(datetime.now() - start_time))
                 logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
     else:
