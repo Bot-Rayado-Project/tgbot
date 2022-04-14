@@ -4,7 +4,7 @@ from botrayado.handlers.config import COMMANDS_2 as COMMANDS
 from botrayado.keyboards.menu_kb import START_KB
 from botrayado.database.db import database_handler
 from botrayado.handlers.schedule import RESULTS
-from utils.logger import get_logger
+from botrayado.utils.logger import get_logger
 
 
 START_PHRASES = ['начать', 'старт', '/начать', '/start', 'start']
