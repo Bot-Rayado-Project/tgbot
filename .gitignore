@@ -14,6 +14,7 @@ workspace/
 # C extensions
 *.so
 .idea/
+.env_for_tgbot/
 *.txt
 test.py
 *.gpx
