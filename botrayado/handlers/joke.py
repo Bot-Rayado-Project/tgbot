@@ -20,6 +20,7 @@ async def joke(msg: types.Message):
 
     else:
         RESULTS.clear()
+        COMMANDS.clear()
         message = 'Неправильная команда'
         await msg.answer(message, reply_markup=START_KB)
         logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(message))
