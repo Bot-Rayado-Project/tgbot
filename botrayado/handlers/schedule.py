@@ -29,35 +29,21 @@ async def faculties(msg: types.Message):
 
     try:
         all_commands = await fetch_commands(msg)
-
-        if (all_commands[1][0].lower() == 'расписание' or all_commands[2][0].lower() == 'расписание'
-        or all_commands[2][0].lower() == 'создать шаблон' or all_commands[3][0].lower() == 'создать шаблон'):
             
-            if all_commands[0][0].lower() == 'вся неделя':
+        if all_commands[0][0].lower() == 'вся неделя':
 
-                message = 'Выберите неделю'
-                await msg.answer(message, reply_markup=CURRENT_OR_NEXT_WEEK_KB)
-                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-
-            elif (all_commands[0][0].lower() == 'завтра' or all_commands[0][0].lower() == 'сегодня'
-                or all_commands[0][0].lower() == 'текущая неделя' or all_commands[0][0].lower() == 'следующая неделя'):
-
-                message = 'Выберите факультет'
-                await msg.answer(message, reply_markup=FACULTIES_KB)
-                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-            else:
-
-                message = 'Неправильная команда'
-                await msg.answer(message, reply_markup=START_KB)
-
-
-        else:
-
-            message = 'Неправильная команда'
-            await msg.answer('Неправильная команда', reply_markup=START_KB)
+            message = 'Выберите неделю'
+            await msg.answer(message, reply_markup=CURRENT_OR_NEXT_WEEK_KB)
             logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
+
+
+        elif (all_commands[0][0].lower() == 'завтра' or all_commands[0][0].lower() == 'сегодня'
+            or all_commands[0][0].lower() == 'текущая неделя' or all_commands[0][0].lower() == 'следующая неделя'):
+
+            message = 'Выберите факультет'
+            await msg.answer(message, reply_markup=FACULTIES_KB)
+            logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
+
 
     except Exception as e:
         logger.error(
@@ -71,39 +57,19 @@ async def streams(msg: types.Message):
     try:
         all_commands = await fetch_commands(msg)
         
-        if (all_commands[2][0].lower() == 'расписание' or all_commands[3][0].lower() == 'расписание'
-         or all_commands[3][0].lower() == 'создать шаблон' or all_commands[4][0].lower() == 'создать шаблон'):
-            if all_commands[0][0].lower() in [i.lower() for i in FACULTIES]:
-                if all_commands[1][0].lower() == 'сегодня' or all_commands[1][0].lower() == 'завтра':
+        if all_commands[1][0].lower() == 'сегодня' or all_commands[1][0].lower() == 'завтра':
 
-                    message = 'Выберите поток'
-                    await msg.answer(message, reply_markup=FACULTIES_KB_BUTTONS[msg.text.upper()])
-                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-                elif (all_commands[2][0].lower() == 'вся неделя' and (all_commands[1][0].lower() == 'текущая неделя' 
-                            or all_commands[1][0].lower() == 'следующая неделя')):
-
-                    message = 'Выберите поток'
-                    await msg.answer(message, reply_markup=FACULTIES_KB_BUTTONS[msg.text.upper()])
-                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-                else:
-
-                    message = 'Неправильная команда'
-                    await msg.answer(message, reply_markup=START_KB)
-                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-            else:
-
-                message = 'Неправильная команда'
-                await msg.answer(message, reply_markup=START_KB)
-                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-        else:
-
-            message = 'Неправильная команда'
-            await msg.answer(message, reply_markup=START_KB)
+            message = 'Выберите поток'
+            await msg.answer(message, reply_markup=FACULTIES_KB_BUTTONS[msg.text.upper()])
             logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
+
+        elif (all_commands[2][0].lower() == 'вся неделя' and (all_commands[1][0].lower() == 'текущая неделя' 
+                    or all_commands[1][0].lower() == 'следующая неделя')):
+
+            message = 'Выберите поток'
+            await msg.answer(message, reply_markup=FACULTIES_KB_BUTTONS[msg.text.upper()])
+            logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
+
 
     except Exception as e:
         logger.error(
@@ -116,50 +82,20 @@ async def streams_v2(msg: types.Message):
 
     try:
         all_commands = await fetch_commands(msg)
-        
-        if (all_commands[3][0].lower() == 'расписание' or all_commands[4][0].lower() == 'расписание' 
-        or all_commands[4][0].lower() == 'создать шаблон' or all_commands[5][0].lower() == 'создать шаблон'):
 
-            if all_commands[1][0].lower() in [i.lower() for i in FACULTIES]:
+        if ((all_commands[2][0].lower() == 'текущая неделя' or all_commands[2][0].lower() == 'следующая неделя') and 
+            all_commands[3][0].lower() == 'вся неделя'):
 
-                if all_commands[0][0].lower() in [i.lower() for i in STREAMS]:
-
-                    if ((all_commands[2][0].lower() == 'текущая неделя' or all_commands[2][0].lower() == 'следующая неделя') and 
-                        all_commands[3][0].lower() == 'вся неделя'):
-
-                        message = 'Выберите группу'
-                        await msg.answer(message, reply_markup=STREAMS_KB[msg.text.lower()])
-                        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-                    elif all_commands[2][0].lower() == 'сегодня' or all_commands[2][0].lower() == 'завтра':
-                        
-                        message = 'Выберите группу'
-                        await msg.answer('Выберите группу', reply_markup=STREAMS_KB[msg.text.lower()])
-                        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-                    else:
-
-                        message = 'Неправильная команда'
-                        await msg.answer(message, reply_markup=START_KB)
-                        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-                else:
-
-                    message = 'Неправильная команда'
-                    await msg.answer(message, reply_markup=START_KB)
-                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-            else:
-
-                message = 'Неправильная команда'
-                await msg.answer(message, reply_markup=START_KB)
-                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-        else:
-
-            message = 'Неправильная команда'
-            await msg.answer(message, reply_markup=START_KB)
+            message = 'Выберите группу'
+            await msg.answer(message, reply_markup=STREAMS_KB[msg.text.lower()])
             logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
+
+        elif all_commands[2][0].lower() == 'сегодня' or all_commands[2][0].lower() == 'завтра':
+            
+            message = 'Выберите группу'
+            await msg.answer('Выберите группу', reply_markup=STREAMS_KB[msg.text.lower()])
+            logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
+
 
     except Exception as e:
         logger.error(
@@ -173,48 +109,41 @@ async def groups(msg: types.Message):
 
     try:
         all_commands = await fetch_commands(msg)
-
-        if all_commands[4][0].lower() != 'расписание' and all_commands[5][0].lower() != 'расписание':
             
-            if all_commands[6][0].lower() == 'создать шаблон' or all_commands[5][0].lower() == 'создать шаблон':
-
-                if all_commands[4][0].lower() == 'вся неделя':
-                    try:
-            
-                        set_button_blueprint(
-                            str(all_commands[3][0][0].upper() + 'Н ' + all_commands[0][0].upper()), msg, all_commands[5][0])
-
-                    except Exception as e:
-                        logger.error(
-                            f'Ошибка в сохранении шаблона для всей недели, groups, schedule.py{e}, {traceback.format_exc()}')
-                        await msg.answer('Непредвиденная ошибкa', reply_markup=START_KB)
-
+        if all_commands[6][0].lower() == 'создать шаблон' or all_commands[5][0].lower() == 'создать шаблон':
+            if all_commands[4][0].lower() == 'вся неделя':
+                try:
+        
+                    set_button_blueprint(
+                        str(all_commands[3][0][0].upper() + 'Н ' + all_commands[0][0].upper()), msg, all_commands[5][0])
+                    
                     message = f'Шаблон записан: {all_commands[3][0][0].upper()}Н {all_commands[0][0].upper()}'
                     await msg.answer(message, reply_markup=START_KB)
                     logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
-                else:
-                    try:
-                        set_button_blueprint(
-                            str(all_commands[3][0].capitalize() + ' ' + all_commands[0][0].upper()), msg, all_commands[4][0])
+                except Exception as e:
+                    logger.error(
+                        f'Ошибка в сохранении шаблона для всей недели, groups, schedule.py{e}, {traceback.format_exc()}')
+                    await msg.answer('Непредвиденная ошибкa', reply_markup=START_KB)
 
-                    except Exception as e:
-                        logger.error(
-                            f'Ошибка в сохранении шаблона для одного дня, groups, schedule.py{e}, {traceback.format_exc()}')
-                        await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
+            else:
+                try:
+                    set_button_blueprint(
+                        str(all_commands[3][0].capitalize() + ' ' + all_commands[0][0].upper()), msg, all_commands[4][0])
+                    
                     message = f'Шаблон записан: {all_commands[3][0].capitalize()} {all_commands[0][0].upper()}'
                     await msg.answer(message, reply_markup=START_KB)
                     logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
-            else:
+                except Exception as e:
+                    logger.error(
+                        f'Ошибка в сохранении шаблона для одного дня, groups, schedule.py{e}, {traceback.format_exc()}')
+                    await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
-                message = 'Неправильная команда'
-                await msg.answer(message, reply_markup=START_KB)
-                logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
 
-        else:
-    
+        elif all_commands[5][0].lower() == 'расписание' or all_commands[4][0].lower() == 'расписание':
+        
             if all_commands[3][0].lower() == 'сегодня' or all_commands[3][0].lower() == 'завтра':
                 try:
                     schedule = await print_schedule(all_commands[3][0].lower(), all_commands[0][0].lower())
@@ -225,7 +154,7 @@ async def groups(msg: types.Message):
                         await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
                     else:
-
+                    
                         await msg.answer(schedule, reply_markup=START_KB)
                         logger.info('Time of table out: ' + str(datetime.now() - start_time))
                         logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
@@ -257,7 +186,7 @@ async def groups(msg: types.Message):
 
     except Exception as e:
         logger.error(
-            f'Ошибка в обращении к RESULTS в groups, schedule.py {e}, {traceback.format_exc()}')
+            f'Ошибка в обращении к users.db в groups, schedule.py {e}, {traceback.format_exc()}')
         await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
 
