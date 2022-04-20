@@ -7,6 +7,7 @@ f = open('logs.log', 'w')
 f.write('Bot started')
 f.close()
 
+
 start.register_handlers_start(bot_dispatcher)
 joke.register_handlers_joke(bot_dispatcher)
 _help.register_handlers_help(bot_dispatcher)

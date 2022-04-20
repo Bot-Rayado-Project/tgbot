@@ -60,3 +60,9 @@ def set_button_blueprint(cmd: str, msg: types.Message, sc_btn: str) -> bool:
         cursor.execute(UPDATE_CONFIG_BUTTONS.format(btn[0], btn[1], cmd, msg.from_user.id))
 
     sqlite_connection.commit()
+
+
+async def fetch_commands(msg: types.Message) -> list:
+    cursor.execute(SELLECT_ALL_COMMANDS.format(msg.from_user.id))
+    cmd = cursor.fetchall()
+    return cmd
