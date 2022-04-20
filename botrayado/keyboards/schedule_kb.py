@@ -28,6 +28,7 @@ STREAM_SISS_KB = ReplyKeyboardMarkup(resize_keyboard=True)
 
 
 DAYS_OF_WEEK_KB = ReplyKeyboardMarkup(resize_keyboard=True)
+DAYS_OF_WEEK_CFG_KB = ReplyKeyboardMarkup(resize_keyboard=True)
 CURRENT_OR_NEXT_WEEK_KB = ReplyKeyboardMarkup(resize_keyboard=True)
 
 
@@ -58,14 +59,27 @@ STREAM_RIT_BUTTONS: list = ['брт', 'бик']
 STREAM_SISS_BUTTONS: list = ['бин']
 
 
-DAYS_OF_WEEK_BUTTONS: list = ['сегодня', 'завтра', 'вся неделя']
+DAYS_OF_WEEK_BUTTONS: list = ['сегодня', 'завтра', 'вся неделя', 'редактировать расписание', 'посмотреть аннотации']
+DAYS_OF_WEEK_CFG_BUTTONS: list = ['сегодня', 'завтра', 'вся неделя'] 
 CURRENT_OR_NEXT_WEEK_BUTTONS: list = ['текущая неделя', 'следующая неделя']
+
+
+DAYS_OF_WEEK_CFG_KB.row(
+    KeyboardButton(DAYS_OF_WEEK_BUTTONS[0].capitalize()),
+    KeyboardButton(DAYS_OF_WEEK_BUTTONS[1].capitalize()),
+    KeyboardButton(DAYS_OF_WEEK_BUTTONS[2].capitalize())
+)
+DAYS_OF_WEEK_CFG_KB.row(KeyboardButton('Меню'))
 
 
 DAYS_OF_WEEK_KB.row(
     KeyboardButton(DAYS_OF_WEEK_BUTTONS[0].capitalize()),
     KeyboardButton(DAYS_OF_WEEK_BUTTONS[1].capitalize()),
     KeyboardButton(DAYS_OF_WEEK_BUTTONS[2].capitalize())
+)
+DAYS_OF_WEEK_KB.row(
+    KeyboardButton(DAYS_OF_WEEK_BUTTONS[3].capitalize()),
+    KeyboardButton(DAYS_OF_WEEK_BUTTONS[4].capitalize())
 )
 DAYS_OF_WEEK_KB.row(KeyboardButton('Меню'))
 

@@ -8,3 +8,4 @@ from botrayado.handlers import config
 from botrayado.handlers import null
 from botrayado.handlers import admin
 from botrayado.handlers import aliases
+from botrayado.handlers import headman

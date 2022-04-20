@@ -101,3 +101,21 @@ async def print_full_schedule(day_type, group):
         return None
 
     return output
+
+
+async def print_schedule_custom(group: str, day_of_week: str, even: bool) -> str:
+    try:
+        week_checked = 'четная' if even else 'нечетная'
+        output = '⸻⸻⸻⸻⸻\n' + 'Группа: ' + group.upper() + '\n' \
+            + 'День недели: ' + day_of_week.capitalize() + '\n' + 'Неделя: ' + week_checked.capitalize() + '\n' \
+            + '⸻⸻⸻⸻⸻\n'
+        group = translit(group, language_code='ru', reversed=True)
+        day_of_week = translit(day_of_week, language_code='ru', reversed=True).replace("'", "")
+
+        responce = json.loads(await aiohttp_fetch(url=f'http://{RESTIP}:{RESTPORT}/schedule/?group={group}&even={even}&day={day_of_week}'))
+        output += responce['schedule']
+
+        return output
+    except Exception as e:
+        logger.error(f"Error in sheethandler printing schedule ({e}): {traceback.format_exc()}")
+        return "Ошибка в получении расписания. Информация об ошибке направлена разработчикам"

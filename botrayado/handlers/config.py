@@ -5,16 +5,14 @@ import botrayado.keyboards.config_kb as config_kb
 from botrayado.schedule.sheethandler import print_full_schedule, print_schedule
 import botrayado.keyboards.schedule_kb as schedule_kb
 from botrayado.keyboards.menu_kb import START_KB
-from botrayado.database.db import database_handler
+from botrayado.database.db import database_handler, fetch_commands
 from botrayado.utils.logger import get_logger
 import traceback
 
 
 logger = get_logger(__name__)
 
-COMMANDS = []
-COMMANDS_2 = []
-btns = ['1', '2', '3', 'С', 'З', 'Т']
+btns = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ячейка']
 
 
 @database_handler(ret_cfg=True)
@@ -35,9 +33,6 @@ async def config_start(msg: types.Message, buttons: list) -> None:
 @database_handler(ret_cfg=True)
 async def create_blueprint_start(msg: types.Message,
                                  buttons: list) -> None:
-                                 
-    COMMANDS.append(msg.text)
-    COMMANDS_2.append(msg.text)
 
     CONFIG_KB = config_kb.create_config_keyboard(buttons, False, False)
 
@@ -49,17 +44,16 @@ async def create_blueprint_start(msg: types.Message,
 @database_handler(ret_cfg=True)
 async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
     start_time = datetime.now()
-    COMMANDS.append(msg.text)
-    COMMANDS_2.append(msg.text)
+    all_commands = await fetch_commands(msg)
 
-    if 'Создать шаблон' in COMMANDS:
+    if all_commands[1][0].lower() == 'создать шаблон':
         message = 'Выберите последовательность шаблона'
-        await msg.answer(message, reply_markup=schedule_kb.DAYS_OF_WEEK_KB)
+        await msg.answer(message, reply_markup=schedule_kb.DAYS_OF_WEEK_CFG_KB)
         logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(message))
 
     
-    elif '1 ячейка' not in COMMANDS and '2 ячейка' not in COMMANDS and '3 ячейка' not in COMMANDS:
-        res = COMMANDS[0].split(' ')
+    elif all_commands[0][0].lower() != '1 ячейка' and all_commands[0][0].lower() != '2 ячейка' and all_commands[0][0].lower() != '3 ячейка':
+        res = all_commands[0][0].split(' ')
         if res[0] == 'СН':
 
             schedule = await print_full_schedule('следующая неделя', res[1].lower())
@@ -108,15 +102,12 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
         message = 'Ячейка пуста'
         await msg.answer(message, reply_markup=config_kb.create_config_keyboard(buttons, True, False))
         logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(message))
-    
-        
-    COMMANDS.clear()
 
 
 def register_handler_config(bot_dispatcher: Dispatcher):
     bot_dispatcher.register_message_handler(config_start, filters.Text(
-        contains='Шаблоны расписания', ignore_case=True))
+        equals='Шаблоны расписания', ignore_case=True))
     bot_dispatcher.register_message_handler(create_blueprint_start, filters.Text( 
-        contains='Создать шаблон', ignore_case=True))
+        equals='Создать шаблон', ignore_case=True))
     bot_dispatcher.register_message_handler(choose_cells_handler, filters.Text(
-        startswith=btns, ignore_case=True))
+        endswith=btns, ignore_case=True))

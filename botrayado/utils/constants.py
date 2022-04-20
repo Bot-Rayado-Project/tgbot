@@ -1,4 +1,5 @@
 import os
+from typing import NamedTuple
 from botrayado.keyboards.schedule_kb import GROUP_BFI_KB
 from botrayado.keyboards.schedule_kb import GROUP_BVT_KB
 from botrayado.keyboards.schedule_kb import GROUP_BST_KB
@@ -71,7 +72,26 @@ ADD_COMMAND: str = 'INSERT INTO users VALUES({0}, (STRFTIME("%Y-%m-%d %H:%M:%f",
 FIRST_ADD_CONFIG_BUTTONS: str = 'INSERT INTO config VALUES({0}, "1 ячейка, 2 ячейка, 3 ячейка");'  # Вызывается только первый раз для каждого пользователя.
 UPDATE_CONFIG_BUTTONS: str = 'UPDATE config SET keyboard_buttons = "{0}, {1}, {2}" where user_id={3};'  # Обновить кнопки по записи.
 SELECT_CONFIG_KEYBOARD_BUTTONS: str = 'SELECT keyboard_buttons FROM config WHERE user_id={0};'
+SELLECT_ALL_COMMANDS: str = "SELECT command FROM users WHERE user_id={0} ORDER BY date DESC;"
 
 
 DAYS_ENG = ['ponedelnik', 'vtornik', 'sreda', 'chetverg', 'pjatnitsa', 'subbota']
 DAYS_RU = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота']
+DLT = ['перезаписать', 'удалить']
+PAIRS = ['1 пара', '2 пара', '3 пара', '4 пара', '5 пара', 'весь день']
+WEEKS = ['четная', 'нечетная', 'обе']
+
+
+class HeadmanRequest(NamedTuple):
+    week: str = None
+    dayofweek: str = None
+    pair: str = None
+    move: str = None
+    changes: str = None
+
+
+headman_requests = {}
+
+# Старосты
+
+headmans_ids: dict = {489684053: 'бвт2103'}
