@@ -1,5 +1,6 @@
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import filters
+from aiohttp import request
 from botrayado.schedule.sheethandler import print_full_schedule
 from botrayado.schedule.sheethandler import print_schedule
 from botrayado.keyboards.menu_kb import START_KB
@@ -73,7 +74,7 @@ async def streams(msg: types.Message):
 
     except Exception as e:
         logger.error(
-            f'Ошибка в обращении к RESULTS в streams, schedule.py {e}, {traceback.format_exc()}')
+            f'Ошибка в обращении к users.db в streams, schedule.py {e}, {traceback.format_exc()}')
         await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
 
@@ -99,7 +100,7 @@ async def streams_v2(msg: types.Message):
 
     except Exception as e:
         logger.error(
-            f'Ошибка в обращении к RESULTS в streams_v2, schedule.py {e}, {traceback.format_exc()}')
+            f'Ошибка в обращении к users.db в streams_v2, schedule.py {e}, {traceback.format_exc()}')
         await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
 

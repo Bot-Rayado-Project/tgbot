@@ -14,7 +14,7 @@ async def joke(msg: types.Message):
     
     mesg = (await aiohttp_fetch(url='http://rzhunemogu.ru/RandJSON.aspx?CType=11'))[12:-2]
     await msg.answer(str(mesg), reply_markup=START_KB)
-    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(mesg))
+    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + 'Joke printed')
 
 def register_handlers_joke(bot_dispatcher: Dispatcher):
     bot_dispatcher.register_message_handler(

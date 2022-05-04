@@ -15,7 +15,7 @@ async def donate(msg: types.Message):
     if str(msg.from_user.id) not in USERSIDS:
         message = 'Сколько не жалко ❤️\nhttps://www.tinkoff.ru/cf/67hbUB2jUpf'
         await msg.answer(message, reply_markup=START_KB)
-        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(message))
+        logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + 'Donat printed')
         
     else:
         message = 'Access granted'

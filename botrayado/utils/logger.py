@@ -2,7 +2,7 @@ import logging
 import logging.handlers
 from botrayado.utils.constants import DEBUG, EADRESS, EPASSWORD
 
-log_format = '%(asctime)s.%(msecs)03d %(filename)s:%(lineno)d %(levelname)s %(message)s'
+log_format = '%(asctime)s.%(msecs)03d %(levelname)s %(message)s'
 
 
 def get_file_handler() -> logging.FileHandler:

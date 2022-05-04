@@ -4,14 +4,13 @@ from botrayado.handlers import start, donate, _help, joke, schedule, menu, confi
 
 
 f = open('logs.log', 'w')
-f.write('Bot started')
+f.write('Bot started\n')
 f.close()
 
 
 start.register_handlers_start(bot_dispatcher)
-joke.register_handlers_joke(bot_dispatcher)
 _help.register_handlers_help(bot_dispatcher)
-start.register_handlers_start(bot_dispatcher)
+joke.register_handlers_joke(bot_dispatcher)
 donate.register_handlers_donate(bot_dispatcher)
 menu.register_handlers_menu(bot_dispatcher)
 schedule.register_handlers_schedule(bot_dispatcher)
