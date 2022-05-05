@@ -5,10 +5,12 @@ description = ""
 authors = ["darttusin <ivanchepikov444@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "3.10.2"
+python = "^3.10"
 aiogram = "^2.19"
 aiohttp = "^3.8.1"
 transliterate = "^1.10.2"
+psycopg2-binary = "^2.9.3"
+psycopg-binary = "^3.0.12"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.6.0"

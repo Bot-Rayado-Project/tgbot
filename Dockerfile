@@ -1,4 +1,4 @@
-FROM python:3.10.2
+FROM python:3.10-slim
 
 ARG ENVIRON
 
@@ -11,14 +11,19 @@ ENV ENVIRON=${ENVIRON} \
   PIP_DEFAULT_TIMEOUT=100 \
   POETRY_VERSION=1.0.0
 
+# System deps:
 RUN pip install "poetry==$POETRY_VERSION"
 
+# Copy only requirements to cache them in docker layer:
 WORKDIR /tgbot
 COPY poetry.lock pyproject.toml /tgbot/
 
+# Project initialization:
 RUN poetry config virtualenvs.create false \
   && poetry install --no-dev --no-interaction --no-ansi
 
+# Creating folders, and files for a project:
 COPY . /tgbot
 
-CMD ["python3", "main.py"]
+# Setting start comand to python server.py:
+CMD ["python", "main.py"]
