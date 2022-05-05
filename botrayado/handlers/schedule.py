@@ -110,7 +110,7 @@ async def groups(msg: types.Message):
 
     try:
         all_commands = await fetch_commands(msg)
-            
+        
         if all_commands[6][0].lower() == 'создать шаблон' or all_commands[5][0].lower() == 'создать шаблон':
             if all_commands[4][0].lower() == 'вся неделя':
                 try:
