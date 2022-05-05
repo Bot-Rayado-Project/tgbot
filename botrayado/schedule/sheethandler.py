@@ -2,7 +2,6 @@ import traceback
 from botrayado.schedule.whataweek import get_week
 from transliterate import translit
 from botrayado.utils.logger import get_logger
-from botrayado.database.db import sqlite_connection, cursor
 from datetime import datetime, timedelta
 from botrayado.utils.constants import DAYS_ENG, DAYS_RU, RESTIP, RESTPORT
 import json
@@ -79,7 +78,8 @@ async def print_full_schedule(id: int, day_type: str, stream_group: str) -> str:
         response = json.loads(await aiohttp_fetch(url=f'http://{RESTIP}:{RESTPORT}/schedule/?id={id}&stream_group={stream_group}&parity={parity}'))
         print(response)
         for i in range(6):
-            output += str('<b>\n') + DAYS_RU[i].upper() + str('</b>\n\n') + response["shared_schedule"][DAYS_ENG[i]]
+            output += str('<b>\n') + DAYS_RU[i].upper() + str(
+                '</b>\n\n') + response["shared_schedule"][DAYS_ENG[i]]
 
         return output
     except Exception as e:
