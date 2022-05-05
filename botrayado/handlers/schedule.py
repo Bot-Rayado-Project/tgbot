@@ -111,39 +111,7 @@ async def groups(msg: types.Message):
     try:
         all_commands = await fetch_commands(msg)
         
-        if all_commands[6][0].lower() == 'создать шаблон' or all_commands[5][0].lower() == 'создать шаблон':
-            if all_commands[4][0].lower() == 'вся неделя':
-                try:
-        
-                    set_button_blueprint(
-                        str(all_commands[3][0][0].upper() + 'Н ' + all_commands[0][0].upper()), msg, all_commands[5][0])
-                    
-                    message = f'Шаблон записан: {all_commands[3][0][0].upper()}Н {all_commands[0][0].upper()}'
-                    await msg.answer(message, reply_markup=START_KB)
-                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-                except Exception as e:
-                    logger.error(
-                        f'Ошибка в сохранении шаблона для всей недели, groups, schedule.py{e}, {traceback.format_exc()}')
-                    await msg.answer('Непредвиденная ошибкa', reply_markup=START_KB)
-
-
-            else:
-                try:
-                    set_button_blueprint(
-                        str(all_commands[3][0].capitalize() + ' ' + all_commands[0][0].upper()), msg, all_commands[4][0])
-                    
-                    message = f'Шаблон записан: {all_commands[3][0].capitalize()} {all_commands[0][0].upper()}'
-                    await msg.answer(message, reply_markup=START_KB)
-                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
-
-                except Exception as e:
-                    logger.error(
-                        f'Ошибка в сохранении шаблона для одного дня, groups, schedule.py{e}, {traceback.format_exc()}')
-                    await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
-
-
-        elif all_commands[5][0].lower() == 'расписание' or all_commands[4][0].lower() == 'расписание':
+        if all_commands[4][0].lower() == 'расписание' or all_commands[4][0].lower() == 'вся неделя':
         
             if all_commands[3][0].lower() == 'сегодня' or all_commands[3][0].lower() == 'завтра':
                 try:
@@ -183,6 +151,37 @@ async def groups(msg: types.Message):
                 except Exception as e:
                     logger.error(
                         f'Ошибка в обращении к выводу всей недели, groups, schedule.py{e}, {traceback.format_exc()}')
+                    await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
+        
+        elif all_commands[6][0].lower() == 'создать шаблон' or all_commands[5][0].lower() == 'создать шаблон':
+            if all_commands[4][0].lower() == 'вся неделя':
+                try:
+        
+                    set_button_blueprint(
+                        str(all_commands[3][0][0].upper() + 'Н ' + all_commands[0][0].upper()), msg, all_commands[5][0])
+                    
+                    message = f'Шаблон записан: {all_commands[3][0][0].upper()}Н {all_commands[0][0].upper()}'
+                    await msg.answer(message, reply_markup=START_KB)
+                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
+
+                except Exception as e:
+                    logger.error(
+                        f'Ошибка в сохранении шаблона для всей недели, groups, schedule.py{e}, {traceback.format_exc()}')
+                    await msg.answer('Непредвиденная ошибкa', reply_markup=START_KB)
+
+
+            else:
+                try:
+                    set_button_blueprint(
+                        str(all_commands[3][0].capitalize() + ' ' + all_commands[0][0].upper()), msg, all_commands[4][0])
+                    
+                    message = f'Шаблон записан: {all_commands[3][0].capitalize()} {all_commands[0][0].upper()}'
+                    await msg.answer(message, reply_markup=START_KB)
+                    logger.info('Answer: ' + str(msg.from_user.username) + ' - ' +  str(message))
+
+                except Exception as e:
+                    logger.error(
+                        f'Ошибка в сохранении шаблона для одного дня, groups, schedule.py{e}, {traceback.format_exc()}')
                     await msg.answer('Непредвиденная ошибка', reply_markup=START_KB)
 
     except Exception as e:
