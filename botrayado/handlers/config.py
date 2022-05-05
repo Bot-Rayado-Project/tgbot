@@ -56,7 +56,7 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
         res = all_commands[0][0].split(' ')
         if res[0] == 'СН':
 
-            schedule = await print_full_schedule('следующая неделя', res[1].lower())
+            schedule = await print_full_schedule(msg.from_user.id,'следующая неделя', res[1].lower())
             if schedule == None:
 
                 message = 'Непредвиденная ошибка'
@@ -71,7 +71,7 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
 
         elif res[0] == 'ТН':
 
-            schedule = await print_full_schedule('текущая неделя', res[1].lower())
+            schedule = await print_full_schedule(msg.from_user.id,'текущая неделя', res[1].lower())
             if schedule == None:
 
                 message = 'Непредвиденная ошибка'
@@ -85,7 +85,7 @@ async def choose_cells_handler(msg: types.Message, buttons: list) -> None:
                 logger.info('Answer: ' + str(msg.from_user.username) + ' - ' + str(schedule))
 
         else:
-            schedule = await print_schedule(res[0].lower(), res[1].lower())
+            schedule = await print_schedule(msg.from_user.id,res[0].lower(), res[1].lower())
             if schedule == None:
 
                 message = 'Непредвиденная ошибка'

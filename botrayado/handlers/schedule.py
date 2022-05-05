@@ -147,7 +147,7 @@ async def groups(msg: types.Message):
         
             if all_commands[3][0].lower() == 'сегодня' or all_commands[3][0].lower() == 'завтра':
                 try:
-                    schedule = await print_schedule(all_commands[3][0].lower(), all_commands[0][0].lower())
+                    schedule = await print_schedule(msg.from_user.id, all_commands[3][0].lower(), all_commands[0][0].lower())
 
                     if schedule == None:
                         logger.error(
@@ -167,7 +167,7 @@ async def groups(msg: types.Message):
 
             if all_commands[4][0].lower() == 'вся неделя' and (all_commands[3][0].lower() == 'текущая неделя' or all_commands[3][0].lower() == 'следующая неделя'):
                 try:
-                    schedule = await print_full_schedule(all_commands[3][0].lower(), all_commands[0][0].lower())
+                    schedule = await print_full_schedule(msg.from_user.id, all_commands[3][0].lower(), all_commands[0][0].lower())
 
                     if schedule == None:
                         logger.error(
