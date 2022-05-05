@@ -3,29 +3,21 @@ from aiogram import types
 import typing
 import sqlite3
 from botrayado.utils.logger import get_logger
+from botrayado.utils.constants import DBHOST, DBNAME, DBPASSWORD, DBPORT, DBUSER
 import requests
+import psycopg2
 
 
 logger = get_logger(__name__)
 
-
-def set_up_connection_with_db(data_base_name: str) -> tuple | None:
-    try:
-        sqlite_connection: sqlite3.Connection = sqlite3.connect(data_base_name)
-        return sqlite_connection, sqlite_connection.cursor()
-
-    except sqlite3.Error:
-        logger.error("Не удалось подключиться к базе данных users.db")
-        exit()
-
-
-sqlite_connection, cursor = set_up_connection_with_db("botrayado/database/db/users.db")
+sqlite_connection = psycopg2.connect(dbname=DBNAME, user=DBUSER, password=DBPASSWORD, host=DBHOST)
+cursor = sqlite_connection.cursor()
 
 
 def database_handler(ret_cfg: bool = False):
     def decorator(func: typing.Callable[..., typing.Any]):
         async def wrapper(msg: types.Message) -> str:
-
+            
             logger.info(f'Request: {msg.from_user.username} - {msg.text}')
             cursor.execute(ADD_COMMAND.format(msg.from_user.id, msg.text))
             sqlite_connection.commit()

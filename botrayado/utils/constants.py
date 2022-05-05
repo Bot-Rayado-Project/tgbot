@@ -56,7 +56,11 @@ STREAMS_KB = {
     'бин': GROUP_BIN_KB
 }
 
-
+DBUSER = os.environ.get('DBUSER')
+DBHOST = os.environ.get('DBHOST')
+DBNAME = os.environ.get('DBNAME')
+DBPORT = os.environ.get('DBPORT')
+DBPASSWORD = os.environ.get('USERSIDS')
 USERSIDS = os.environ.get('USERSIDS').split()
 TOKEN = os.environ.get('TOKEN')
 EADRESS = os.environ.get('EADRESS')
@@ -68,10 +72,10 @@ VOLUMENAME = os.environ.get('VOLUMENAME')
 
 
 # Команды SQLITE
-ADD_COMMAND: str = 'INSERT INTO users VALUES({0}, (STRFTIME("%Y-%m-%d %H:%M:%f", "NOW")), "{1}");'
-FIRST_ADD_CONFIG_BUTTONS: str = 'INSERT INTO config VALUES({0}, "1 ячейка, 2 ячейка, 3 ячейка");'  # Вызывается только первый раз для каждого пользователя.
-UPDATE_CONFIG_BUTTONS: str = 'UPDATE config SET keyboard_buttons = "{0}, {1}, {2}" where user_id={3};'  # Обновить кнопки по записи.
-SELECT_CONFIG_KEYBOARD_BUTTONS: str = 'SELECT keyboard_buttons FROM config WHERE user_id={0};'
+ADD_COMMAND: str = "INSERT INTO users VALUES({0}, (STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW')), '{1}');"
+FIRST_ADD_CONFIG_BUTTONS: str = "INSERT INTO config VALUES({0}, '1 ячейка, 2 ячейка, 3 ячейка');" # Вызывается только первый раз для каждого пользователя.
+UPDATE_CONFIG_BUTTONS: str = "UPDATE config SET keyboard_buttons = '{0}, {1}, {2}' where user_id={3};"  # Обновить кнопки по записи.
+SELECT_CONFIG_KEYBOARD_BUTTONS: str = "SELECT keyboard_buttons FROM config WHERE user_id={0};"
 SELLECT_ALL_COMMANDS: str = "SELECT command FROM users WHERE user_id={0} ORDER BY date DESC;"
 
 
