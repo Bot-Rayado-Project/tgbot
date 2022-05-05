@@ -3,6 +3,7 @@ from aiogram import types
 import typing
 import sqlite3
 from botrayado.utils.logger import get_logger
+import requests
 
 
 logger = get_logger(__name__)
@@ -63,6 +64,8 @@ def set_button_blueprint(cmd: str, msg: types.Message, sc_btn: str) -> bool:
 
 
 async def fetch_commands(msg: types.Message) -> list:
+
     cursor.execute(SELLECT_ALL_COMMANDS.format(msg.from_user.id))
     cmd = cursor.fetchall()
+    
     return cmd

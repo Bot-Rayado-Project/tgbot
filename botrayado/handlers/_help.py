@@ -1,4 +1,3 @@
-from asyncio.log import logger
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import filters
 from initialize_bot import bot
