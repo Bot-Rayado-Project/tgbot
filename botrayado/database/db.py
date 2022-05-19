@@ -10,15 +10,15 @@ import psycopg2
 
 logger = get_logger(__name__)
 
-sqlite_connection = psycopg2.connect(
-    dbname=DBNAME, user=DBUSER, password=DBPASSWORD, host=DBHOST)
-cursor = sqlite_connection.cursor()
-
 
 def database_handler(ret_cfg: bool = False):
     def decorator(func: typing.Callable[..., typing.Any]):
         async def wrapper(msg: types.Message) -> str:
-
+            
+            sqlite_connection = psycopg2.connect(
+                dbname=DBNAME, user=DBUSER, password=DBPASSWORD, host=DBHOST)
+            cursor = sqlite_connection.cursor()
+            
             logger.info(f'Request: {msg.from_user.username} - {msg.text}')
             cursor.execute(ADD_COMMAND.format(
                 msg.from_user.id, msg.text))
@@ -46,7 +46,11 @@ def database_handler(ret_cfg: bool = False):
 
 
 def set_button_blueprint(cmd: str, msg: types.Message, sc_btn: str) -> bool:
-
+    
+    sqlite_connection = psycopg2.connect(
+        dbname=DBNAME, user=DBUSER, password=DBPASSWORD, host=DBHOST)
+    cursor = sqlite_connection.cursor()
+    
     cursor.execute(
         SELECT_CONFIG_KEYBOARD_BUTTONS.format(msg.from_user.id))
     btn = cursor.fetchall()[0][0].split(', ')
@@ -67,7 +71,11 @@ def set_button_blueprint(cmd: str, msg: types.Message, sc_btn: str) -> bool:
 
 
 async def fetch_commands(msg: types.Message) -> list:
-
+    
+    sqlite_connection = psycopg2.connect(
+        dbname=DBNAME, user=DBUSER, password=DBPASSWORD, host=DBHOST)
+    cursor = sqlite_connection.cursor()
+    
     cursor.execute(SELLECT_ALL_COMMANDS.format(msg.from_user.id))
     cmd = cursor.fetchall()
 
