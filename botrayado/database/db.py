@@ -38,7 +38,7 @@ def database_handler(ret_cfg: bool = False):
                     cursor.execute(
                         SELECT_CONFIG_KEYBOARD_BUTTONS.format(msg.from_user.id))
                     # Вернет кнопки клавы с чем то уже имеющимся
-                    sqlite_connection.close()
+      
                     return await func(msg, cursor.fetchall())
             else:
                 sqlite_connection.close()
