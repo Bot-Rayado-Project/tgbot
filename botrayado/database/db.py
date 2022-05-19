@@ -31,14 +31,17 @@ def database_handler(ret_cfg: bool = False):
                     cursor.execute(
                         FIRST_ADD_CONFIG_BUTTONS.format(msg.from_user.id))
                     sqlite_connection.commit()
+                    sqlite_connection.close()
                     # Вернет кнопки клавы с пустыми ячейками
                     return await func(msg, btn)
                 else:
                     cursor.execute(
                         SELECT_CONFIG_KEYBOARD_BUTTONS.format(msg.from_user.id))
                     # Вернет кнопки клавы с чем то уже имеющимся
+                    sqlite_connection.close()
                     return await func(msg, cursor.fetchall())
             else:
+                sqlite_connection.close()
                 return await func(msg)
 
         return wrapper
@@ -68,6 +71,7 @@ def set_button_blueprint(cmd: str, msg: types.Message, sc_btn: str) -> bool:
             btn[0], btn[1], cmd, msg.from_user.id))
 
     sqlite_connection.commit()
+    sqlite_connection.close()
 
 
 async def fetch_commands(msg: types.Message) -> list:
@@ -78,5 +82,6 @@ async def fetch_commands(msg: types.Message) -> list:
     
     cursor.execute(SELLECT_ALL_COMMANDS.format(msg.from_user.id))
     cmd = cursor.fetchall()
+    sqlite_connection.close()
 
     return cmd
