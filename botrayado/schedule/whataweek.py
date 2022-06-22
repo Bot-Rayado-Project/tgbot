@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 
-async def get_week() -> str:
+async def get_week_parity() -> str:
 
     date = datetime.date(datetime.today() + timedelta(hours=3))
     month = str(date)[5:7]
@@ -9,15 +9,21 @@ async def get_week() -> str:
     format = "%Y-%m-%d"
     past_year = str(int(str(datetime.date(datetime.today() + timedelta(hours=3)))[:4]) - 1)
     current_year = str(datetime.date(datetime.today() + timedelta(hours=3)))[:4]
-    if month < 9:
-        week = date.isocalendar()[1]
-        weeks_past_year = datetime.strptime('{}-12-31'.format(past_year), format).isocalendar()[1] - datetime.strptime('{}-09-01'.format(past_year), format).isocalendar()[1] + 1
-        week += weeks_past_year
-    if month >= 9:
-        week = date.isocalendar()[1]
-        weeks_past_sem = datetime.strptime(date, format).isocalendar()[1] - datetime.strptime('{}-09-01'.format(current_year), format).isocalendar()[1] + 1
-        week += weeks_past_sem
-    if week % 2 == 0:
-        return 'четная'
-    else:
-        return 'нечетная'
+    
+    try:
+        if month < 9:
+            number_of_week_now = date.isocalendar()[1]
+            weeks_in_past_year = datetime.strptime('{}-12-31'.format(past_year), format).isocalendar()[1] - datetime.strptime('{}-09-01'.format(past_year), format).isocalendar()[1] + 1
+            number_of_week_now += weeks_in_past_year
+
+        if month >= 9:
+            number_of_week_now = date.isocalendar()[1]
+            weeks_in_past_semestr = datetime.strptime(date, format).isocalendar()[1] - datetime.strptime('{}-09-01'.format(current_year), format).isocalendar()[1] + 1
+            number_of_week_now += weeks_in_past_semestr
+
+    except Exception as e:
+        logger.error(
+            f"Ошибка в определении четности недели, get_week в whataweek.py ({e}): {traceback.format_exc()}")
+        return 'ошибка'
+
+    return 'четная' if number_of_week_now % 2 == 0 else 'нечетная'
