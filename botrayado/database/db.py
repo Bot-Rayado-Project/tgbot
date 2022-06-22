@@ -7,10 +7,19 @@ import traceback
 import asyncpg
 
 
+'''
+*
+Это файл отвечает за все взаимодействия с базой данных только телеграм бота
+*
+'''
+
+
 logger = get_logger(__name__)
 
 
 async def database_connection(user: str, password: str, name: str, host: str) -> asyncpg.Connection | None:
+
+    '''Эта функция устанавливает соединение с базой данных'''
 
     try:
         connection = await asyncpg.connect(user=user, password=password, database=name, host=host)
@@ -25,6 +34,9 @@ async def database_connection(user: str, password: str, name: str, host: str) ->
 
 
 async def database_connection_close(connection: asyncpg.Connection) -> None:
+
+    '''Эта функция закрывает соединение с базой данных'''
+
     try:
         await connection.close()
     
@@ -32,25 +44,33 @@ async def database_connection_close(connection: asyncpg.Connection) -> None:
         logger.error(f'Error in close connection to databasse: {traceback.format_exc()}')
 
 
-async def database_get_blueprints_buttons(message_from_user: types.Message) -> list:
+async def database_get_blueprints_buttons(message_from_user: types.Message) -> list | None:
     
+    '''Эта функция получает кнопки шаблонов из баз данных'''
+
     connection = await database_connection(DBUSER, DBPASSWORD, DBNAME, DBHOST)
+    if connection == None: return False
+
     buttons_in_db = await connection.fetch(
         SELECT_CONFIG_KEYBOARD_BUTTONS.format(message_from_user.from_user.id))
+    # Получает кнопки по айди пользователя
+
     if buttons_in_db == []:
        await connection.fetch(
             FIRST_ADD_CONFIG_BUTTONS.format(message_from_user.from_user.id))
-        
-    else:
-        await connection.fetch(
-            SELECT_CONFIG_KEYBOARD_BUTTONS.format(message_from_user.from_user.id))
+    # Добавляет кнопки если он впервые создаёт шаблоны
+
     await database_connection_close(connection)
+
     return buttons_in_db
 
 
 async def database_set_button_blueprint(new_button: str, message_from_user: types.Message, old_button: str) -> None:
     
+    '''Эта функция устанавливает новую кнопку шаблона, сохраняя её вместо старой в базе данных'''
+
     connection = await database_connection(DBUSER, DBPASSWORD, DBNAME, DBHOST)
+    if connection == None: return False
     
     buttons_in_db = (await connection.fetch(
         SELECT_CONFIG_KEYBOARD_BUTTONS.format(message_from_user.from_user.id)))[0][0].split(', ')
@@ -67,13 +87,19 @@ async def database_set_button_blueprint(new_button: str, message_from_user: type
         await connection.fetch(UPDATE_CONFIG_BUTTONS.format(
             buttons_in_db[0], buttons_in_db[1], new_button, message_from_user.from_user.id))
 
+    # Сверяем какой кнопке соответсвует выбранная пользователем и перезаписываем
+
     await database_connection_close(connection)
 
 
 async def database_fetch_all_commands(message_from_user: types.Message) -> list:
     
+    '''Эта функция заносит все команды ранее введённые пользователем в список'''
+
     connection = await database_connection(DBUSER, DBPASSWORD, DBNAME, DBHOST)
-    all_user_commands = await connection.fetch(SELLECT_ALL_COMMANDS.format(message_from_user.from_user.id))
+    if connection == None: return False
+
+    all_user_commands = await connection.fetch(SELECT_ALL_COMMANDS.format(message_from_user.from_user.id))
     await database_connection_close(connection)
 
     return all_user_commands
@@ -82,9 +108,11 @@ async def database_fetch_all_commands(message_from_user: types.Message) -> list:
 def database_handler():
     def decorator(func: typing.Callable[..., typing.Any]):
         async def wrapper(message_from_user: types.Message) -> str | bool:
+
+            '''Эта декоратор для сохранения каждой команды в базу данных и параллельной записи в логи запроса'''
             
             connection = await database_connection(DBUSER, DBPASSWORD, DBNAME, DBHOST)
-            if connection == None: return await func(message_from_user, False)
+            if connection == None: return func(message_from_user, False)
 
             logger.info(f'Request: {message_from_user.from_user.username} - {message_from_user.text}')
             await connection.fetch(ADD_COMMAND.format(
