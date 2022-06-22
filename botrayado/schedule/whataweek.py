@@ -1,6 +1,13 @@
 from datetime import datetime, timedelta
 
 
+'''
+*
+Этот файл отвечает за определение чётности недели, одна единственная функция
+*
+'''
+
+
 async def get_week_parity() -> str:
 
     date = datetime.date(datetime.today() + timedelta(hours=3))
@@ -13,12 +20,14 @@ async def get_week_parity() -> str:
     try:
         if month < 9:
             number_of_week_now = date.isocalendar()[1]
-            weeks_in_past_year = datetime.strptime('{}-12-31'.format(past_year), format).isocalendar()[1] - datetime.strptime('{}-09-01'.format(past_year), format).isocalendar()[1] + 1
+            weeks_in_past_year = datetime.strptime('{}-12-31'.format(past_year), format).isocalendar()[1] \
+            - datetime.strptime('{}-09-01'.format(past_year), format).isocalendar()[1] + 1
             number_of_week_now += weeks_in_past_year
 
         if month >= 9:
             number_of_week_now = date.isocalendar()[1]
-            weeks_in_past_semestr = datetime.strptime(date, format).isocalendar()[1] - datetime.strptime('{}-09-01'.format(current_year), format).isocalendar()[1] + 1
+            weeks_in_past_semestr = datetime.strptime(date, format).isocalendar()[1] \
+            - datetime.strptime('{}-09-01'.format(current_year), format).isocalendar()[1] + 1
             number_of_week_now += weeks_in_past_semestr
 
     except Exception as e:
