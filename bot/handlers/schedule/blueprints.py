@@ -11,12 +11,20 @@ from bot.logger.logger import get_logger
 import traceback
 
 
+'''
+*
+Файл отвечает а обработку хендлеров для начала записи шаблона или за его вывод
+*
+'''
+
+
 logger = get_logger(__name__)
 
 
 @database_handler()
 async def config_start(message_from_user: types.Message) -> None:
-    logger.info('start cfg')
+    ''' Стартовый хендлер, тут происходит генерация клавиатуры для нового юзера '''
+
     buttons = await database_get_blueprints_buttons(message_from_user)
     if buttons == []:
         CONFIG_KB = await create_config_keyboard(
@@ -32,7 +40,8 @@ async def config_start(message_from_user: types.Message) -> None:
 
 @database_handler()
 async def create_blueprint_start(message_from_user: types.Message) -> None:
-    logger.info('create')
+    ''' Хендлер отвечающий за старт записи шаблона, выбор ячейки для записи'''
+
     buttons = await database_get_blueprints_buttons(message_from_user)
     CONFIG_KB = await create_config_keyboard(buttons, False, False)
 
@@ -43,7 +52,10 @@ async def create_blueprint_start(message_from_user: types.Message) -> None:
 
 @database_handler()
 async def choose_config_cells(message_from_user: types.Message) -> None:
-    logger.info('choose')
+    ''' Хендлер отвечающий за вывод расписания по шаблону или же за сохранение шаблона, 
+    из-за отсутсвия пейлоадов после первого ифа уходит в schedule и там обрабатывается,
+    elif Отвечает за вывод расписания по шаблону, else если ячейка пустая уйдет туда'''
+
     buttons = await database_get_blueprints_buttons(message_from_user)
     start_time = datetime.now()
     all_commands = await database_fetch_all_commands(message_from_user)
