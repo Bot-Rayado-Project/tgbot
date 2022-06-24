@@ -26,4 +26,4 @@ RUN poetry config virtualenvs.create false \
 COPY . /tgbot
 
 # Setting start comand to python server.py:
-CMD ["python", "main.py"]
+CMD ["python", "-m", "bot"]
