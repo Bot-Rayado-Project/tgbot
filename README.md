@@ -1,5 +1,7 @@
 # TG Bot Rayado
 
+TG Bot Rayado - написан на языке программирования Python, был создан для облегчения жизни студентов.
+
 **Текущий мейнтейнер** проекта: [@darttusin](https://github.com/darttusin)
 # Преимущества
 
